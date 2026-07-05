@@ -159,7 +159,7 @@ export const tools: Tool[] = [
       "jwt debugger",
       "inspect jwt",
     ],
-    relatedTools: ["json-formatter", "base64-encoder"],
+    relatedTools: ["json-formatter", "base64-encoder", "hash-generator", "password-generator"],
     faqs: [
       {
         question: "What is a JWT decoder?",
@@ -311,6 +311,134 @@ export const tools: Tool[] = [
         question: "Is this URL encoder free?",
         answer:
           "Yes. Completely free, no signup, runs in your browser.",
+      },
+    ],
+  },
+  {
+    slug: "password-generator",
+    name: "Password Generator",
+    category: "Security",
+    h1: "Free Strong Password Generator Online",
+    seoTitle: "Password Generator — Strong Random Passwords | VyomaStack",
+    seoDescription:
+      "Free online password generator. Create strong random passwords with custom length, uppercase, lowercase, numbers, and symbols. Cryptographically secure — runs in your browser.",
+    description:
+      "Generate strong random passwords with custom length and character sets. Strength indicator, bulk generation, and one-click copy. Runs in your browser.",
+    keywords: [
+      "password generator",
+      "random password generator",
+      "strong password generator",
+      "secure password generator",
+      "generate password online",
+      "password maker",
+    ],
+    relatedTools: ["hash-generator", "jwt-decoder", "uuid-generator"],
+    faqs: [
+      {
+        question: "How are passwords generated?",
+        answer:
+          "Passwords use the browser's crypto.getRandomValues() API for cryptographically secure randomness. Nothing is sent to a server.",
+      },
+      {
+        question: "What makes a strong password?",
+        answer:
+          "Long passwords (12+ characters) with a mix of uppercase, lowercase, numbers, and symbols are hardest to crack. Avoid common words and reused passwords.",
+      },
+      {
+        question: "Can I exclude confusing characters?",
+        answer:
+          "Yes. Enable 'Exclude ambiguous' to omit characters like 0, O, 1, l, and I that are easy to misread.",
+      },
+      {
+        question: "Is this password generator free?",
+        answer:
+          "Yes. Completely free with no signup, no limits, and no watermarks.",
+      },
+    ],
+  },
+  {
+    slug: "hash-generator",
+    name: "Hash Generator",
+    category: "Security",
+    h1: "Free Online Hash Generator",
+    seoTitle: "Hash Generator — MD5, SHA-1, SHA-256 Online | VyomaStack",
+    seoDescription:
+      "Free online hash generator. Compute MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text instantly. Runs in your browser — private and secure.",
+    description:
+      "Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes from any text. Auto-updates as you type. All hashing runs locally in your browser.",
+    keywords: [
+      "hash generator",
+      "md5 generator",
+      "sha256 generator",
+      "sha1 hash",
+      "online hash calculator",
+      "text to hash",
+      "checksum generator",
+    ],
+    relatedTools: ["password-generator", "base64-encoder", "jwt-decoder"],
+    faqs: [
+      {
+        question: "What hash algorithms are supported?",
+        answer:
+          "MD5, SHA-1, SHA-256, SHA-384, and SHA-512. SHA-256 and SHA-512 are recommended for security-sensitive use cases.",
+      },
+      {
+        question: "Is my text sent to a server?",
+        answer:
+          "No. All hashing runs entirely in your browser using Web Crypto API (and local MD5 for compatibility).",
+      },
+      {
+        question: "What is a hash used for?",
+        answer:
+          "Hashes create a fixed-size fingerprint of data. Developers use them for checksums, cache keys, API signatures, and verifying file integrity.",
+      },
+      {
+        question: "Is MD5 still safe?",
+        answer:
+          "MD5 is not cryptographically secure for passwords or signatures. Use it only for legacy checksums. Prefer SHA-256 or SHA-512 for security.",
+      },
+    ],
+  },
+  {
+    slug: "qr-code-generator",
+    name: "QR Code Generator",
+    category: "Developer",
+    h1: "Free QR Code Generator Online",
+    seoTitle: "QR Code Generator — Create QR Codes Free | VyomaStack",
+    seoDescription:
+      "Free online QR code generator. Create QR codes from URLs, text, WiFi credentials, and more. Download PNG or copy to clipboard. Runs in your browser.",
+    description:
+      "Generate QR codes from URLs or any text. Adjust size and error correction, then download PNG or copy. Runs entirely in your browser.",
+    keywords: [
+      "qr code generator",
+      "create qr code",
+      "qr code maker",
+      "free qr code",
+      "url to qr code",
+      "qr code online",
+      "generate qr code",
+    ],
+    relatedTools: ["url-encoder", "uuid-generator", "password-generator"],
+    faqs: [
+      {
+        question: "What can I encode in a QR code?",
+        answer:
+          "URLs, plain text, email addresses, phone numbers, WiFi credentials (WIFI:T:WPA;S:Network;P:password;;), and vCard contact info.",
+      },
+      {
+        question: "Can I download the QR code?",
+        answer:
+          "Yes. Click Download PNG to save a high-quality image. You can also copy it to the clipboard.",
+      },
+      {
+        question: "What is error correction?",
+        answer:
+          "Higher error correction (H) lets the QR code be read even if part of it is damaged or obscured. Medium (M) works well for most URLs.",
+      },
+      {
+        question: "Is this QR code generator free?",
+        answer:
+          "Yes. Completely free with no signup and no watermarks on generated codes.",
       },
     ],
   },
