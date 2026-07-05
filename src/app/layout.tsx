@@ -13,25 +13,25 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "VyomaStack — AI-Powered Developer Platform",
+    default: "VyomaStack — AI Workspace for Software Engineers",
     template: "%s | VyomaStack",
   },
   description:
-    "Search 500+ developer tools: SQL, JSON, AI, security, and more. The GitHub of Developer Tools.",
+    "The AI workspace for SQL, Spark, Java, and data engineering. Format, explain, fix, and generate — free tools with AI-powered workflows.",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
     siteName: "VyomaStack",
-    title: "VyomaStack — AI-Powered Developer Platform",
+    title: "VyomaStack — AI Workspace for Software Engineers",
     description:
-      "500+ developer tools for SQL, JSON, security, Spark, and more.",
+      "Format, explain, fix, and generate. AI-powered workflows for SQL, Spark, and data engineering.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "VyomaStack — AI-Powered Developer Platform",
+    title: "VyomaStack — AI Workspace for Software Engineers",
     description:
-      "500+ developer tools for SQL, JSON, security, Spark, and more.",
+      "Format, explain, fix, and generate. AI-powered workflows for SQL, Spark, and data engineering.",
   },
   robots: { index: true, follow: true },
   icons: {

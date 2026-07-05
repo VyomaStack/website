@@ -8,9 +8,9 @@ export const tools: Tool[] = [
     h1: "Free SQL Formatter & Beautifier Online",
     seoTitle: "SQL Formatter & Beautifier Online — Free | VyomaStack",
     seoDescription:
-      "Free online SQL formatter and beautifier. Format, minify, and prettify SQL for MySQL, PostgreSQL, T-SQL, Spark SQL, Redshift, BigQuery, and more. Runs in your browser — no signup.",
+      "Free online SQL formatter with AI explain. Beautify, minify, and get AI-powered explanations, performance notes, and improvements for MySQL, PostgreSQL, T-SQL, Spark SQL, and more.",
     description:
-      "Beautify and minify SQL queries instantly. Supports MySQL, PostgreSQL, T-SQL, Spark SQL, Redshift, BigQuery, and more. 100% private — runs in your browser.",
+      "Beautify and minify SQL instantly, then explain it with AI. Performance notes and improvement suggestions for MySQL, PostgreSQL, T-SQL, Spark SQL, and more.",
     relatedTools: ["json-formatter", "jwt-decoder"],
     keywords: [
       "sql formatter",
@@ -80,6 +80,11 @@ export const tools: Tool[] = [
         question: "How do I format a PostgreSQL query online?",
         answer:
           "Paste your query, select PostgreSQL from the dialect dropdown, and click Format. The output will use PostgreSQL-compatible keyword handling.",
+      },
+      {
+        question: "Can AI explain my SQL query?",
+        answer:
+          "Yes. Click 'Explain SQL with AI' to get a step-by-step breakdown, performance notes, and improvement suggestions powered by AI.",
       },
       {
         question: "Does this work on mobile?",
@@ -312,7 +317,43 @@ export const tools: Tool[] = [
     slug: "spark-memory-calculator",
     name: "Spark Memory Calculator",
     category: "Spark",
-    description: "Estimate Spark executor memory requirements.",
+    h1: "Spark Executor Memory Calculator",
+    seoTitle: "Spark Memory Calculator — Executor Sizing & AI Advisor | VyomaStack",
+    seoDescription:
+      "Free Spark memory calculator. Estimate executor overhead, unified memory, execution vs storage split, and total cluster memory. AI-powered tuning recommendations for data engineers.",
+    description:
+      "Calculate Spark executor memory, overhead, and cluster totals. Get AI-powered tuning recommendations for production workloads.",
+    keywords: [
+      "spark memory calculator",
+      "spark executor memory",
+      "spark memory tuning",
+      "spark executor sizing",
+      "apache spark memory",
+      "spark submit memory",
+    ],
+    relatedTools: ["sql-formatter", "json-formatter"],
+    faqs: [
+      {
+        question: "How does Spark executor memory work?",
+        answer:
+          "Spark reserves off-heap overhead (max 384 MB or 10% of executor memory), then splits remaining on-heap memory between user code and unified memory (execution + storage) based on spark.memory.fraction.",
+      },
+      {
+        question: "What is a good executor memory size?",
+        answer:
+          "Most workloads run well with 4–8 GB per executor and 2–5 cores. Larger executors increase GC pressure; smaller ones may spill to disk during shuffles.",
+      },
+      {
+        question: "Does this include AI recommendations?",
+        answer:
+          "Yes. After calculating memory breakdown, use the AI Spark Tuning Advisor for personalized recommendations based on your configuration.",
+      },
+      {
+        question: "Is this calculator free?",
+        answer:
+          "Yes. Memory calculation runs in your browser. AI recommendations require an API key configured by the site operator.",
+      },
+    ],
   },
 ];
 

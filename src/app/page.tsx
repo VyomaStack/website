@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles, Zap, Shield } from "lucide-react";
+import { ArrowRight, Search, Sparkles, Shield, Brain, Flame } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,24 +9,48 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { categories, tools } from "@/lib/tools";
 import { LIVE_TOOL_SLUGS } from "@/lib/live-tools";
+import { categories, tools } from "@/lib/tools";
 
 const features = [
   {
-    icon: Zap,
-    title: "Instant & Free",
-    description: "Most tools run in your browser — no signup, no waiting.",
+    icon: Brain,
+    title: "AI-Powered Workflows",
+    description:
+      "Format, explain, optimize, and fix — not just static utilities.",
+  },
+  {
+    icon: Flame,
+    title: "Spark & Data Engineering",
+    description:
+      "Memory calculators, config tuning, and AI advisors built for real pipelines.",
   },
   {
     icon: Shield,
-    title: "Privacy First",
-    description: "Your data stays on your device. Nothing sent to our servers.",
+    title: "Free Tools + Smart AI",
+    description:
+      "Browser-based formatters are free. AI explain and optimize when you need more.",
+  },
+];
+
+const aiHighlights = [
+  {
+    title: "AI SQL Assistant",
+    description: "Format SQL, then get AI explanations, performance notes, and improvements.",
+    href: "/tools/sql-formatter",
+    badge: "Live",
   },
   {
-    icon: Sparkles,
-    title: "AI-Powered",
-    description: "Smart explanations and optimizations coming soon.",
+    title: "Spark Memory Calculator",
+    description: "Calculate executor memory, then get AI tuning and cost optimization advice.",
+    href: "/tools/spark-memory-calculator",
+    badge: "Live",
+  },
+  {
+    title: "AI JSON Studio",
+    description: "Format JSON, generate POJOs, TypeScript interfaces, and schemas.",
+    href: "/tools/json-formatter",
+    badge: "Coming soon",
   },
 ];
 
@@ -37,31 +61,32 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/15 via-background to-background" />
         <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-24 text-center sm:py-32">
-          <span className="rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            AI-Powered Developer Platform
+          <span className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+            <Sparkles className="mr-1.5 inline size-3.5" />
+            AI Workspace for Software Engineers
           </span>
-          <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-6xl">
-            Build Faster.
+          <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-6xl">
+            Format. Explain.
             <br />
-            <span className="text-primary">Ship Smarter.</span>
+            <span className="text-primary">Fix. Generate.</span>
           </h1>
-          <p className="max-w-xl text-lg text-muted-foreground">
-            500+ developer tools for SQL, JSON, security, Spark, and more. The
-            GitHub of Developer Tools.
+          <p className="max-w-2xl text-lg text-muted-foreground">
+            The AI workspace for SQL, Spark, Java, and data engineering.
+            Free browser tools bring you in — AI workflows make you stay.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/tools/sql-formatter">
               <Button size="lg">
-                Explore Tools
+                Try AI SQL Assistant
                 <ArrowRight className="size-4" />
               </Button>
             </Link>
-            <Link href="/tools/sql-formatter">
+            <Link href="/tools/spark-memory-calculator">
               <Button variant="outline" size="lg">
-                Try SQL Formatter
+                Spark Memory Calculator
               </Button>
             </Link>
           </div>
@@ -70,15 +95,49 @@ export default function Home() {
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search 500+ Developer Tools..."
+              placeholder="Search tools — SQL, Spark, JSON, JWT..."
               className="h-11 pl-10"
             />
           </div>
         </div>
       </section>
 
-      {/* Features */}
+      {/* AI Highlights */}
       <section className="mx-auto max-w-6xl px-6 py-16">
+        <h2 className="text-2xl font-semibold tracking-tight">
+          AI-Powered Workflows
+        </h2>
+        <p className="mt-1 text-muted-foreground">
+          More than formatters — real engineering assistance.
+        </p>
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {aiHighlights.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className={item.badge === "Coming soon" ? "pointer-events-none" : ""}
+            >
+              <Card
+                className={`h-full transition-all ${item.badge === "Live" ? "hover:ring-primary/40" : "opacity-70"}`}
+              >
+                <CardHeader>
+                  <span className="text-xs font-medium text-primary">
+                    {item.badge}
+                  </span>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="size-4 text-primary" />
+                    {item.title}
+                  </CardTitle>
+                  <CardDescription>{item.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="mx-auto max-w-6xl px-6 py-8">
         <div className="grid gap-6 sm:grid-cols-3">
           {features.map((f) => (
             <Card key={f.title} size="sm">
@@ -94,9 +153,9 @@ export default function Home() {
 
       {/* Popular Tools */}
       <section id="tools" className="mx-auto max-w-6xl px-6 py-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Popular Tools</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">All Tools</h2>
         <p className="mt-1 text-muted-foreground">
-          Free online utilities — more launching every week.
+          Free utilities + AI enhancements. More launching every week.
         </p>
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => {
@@ -116,7 +175,9 @@ export default function Home() {
                   <CardTitle>{tool.name}</CardTitle>
                   <CardDescription>{tool.description}</CardDescription>
                   {!isLive && (
-                    <span className="text-xs text-muted-foreground">Coming soon</span>
+                    <span className="text-xs text-muted-foreground">
+                      Coming soon
+                    </span>
                   )}
                 </CardHeader>
               </Card>
@@ -148,28 +209,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Latest */}
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Latest Tools</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          {tools
-            .filter((t) => liveSlugs.has(t.slug))
-            .map((tool) => (
-              <Link key={tool.slug} href={`/tools/${tool.slug}`}>
-                <Card size="sm" className="h-full transition-all hover:ring-primary/40">
-                  <CardHeader>
-                    <CardTitle>{tool.name}</CardTitle>
-                    <CardDescription>{tool.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
+      {/* CTA */}
+      <section className="border-t border-border bg-muted/20 px-6 py-16">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-2xl font-semibold">Built for engineers like you</h2>
+          <p className="mt-2 text-muted-foreground">
+            Spark, SQL, Java, Spring Boot, data pipelines — AI-assisted
+            workflows around real enterprise problems.
+          </p>
+          <Link href="/tools/sql-formatter" className="mt-6 inline-block">
+            <Button size="lg">
+              Start with AI SQL Assistant
+              <ArrowRight className="size-4" />
+            </Button>
+          </Link>
         </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Latest Articles</h2>
-        <p className="mt-2 text-muted-foreground">Coming soon.</p>
       </section>
     </>
   );

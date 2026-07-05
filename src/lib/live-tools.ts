@@ -3,6 +3,7 @@ import type { ComponentType } from "react";
 import { Base64EncoderTool } from "@/components/tools/base64-encoder-tool";
 import { JsonFormatterTool } from "@/components/tools/json-formatter-tool";
 import { JwtDecoderTool } from "@/components/tools/jwt-decoder-tool";
+import { SparkMemoryCalculatorTool } from "@/components/tools/spark-memory-calculator-tool";
 import { SqlFormatterTool } from "@/components/tools/sql-formatter-tool";
 import { UrlEncoderTool } from "@/components/tools/url-encoder-tool";
 import { UuidGeneratorTool } from "@/components/tools/uuid-generator-tool";
@@ -14,6 +15,7 @@ export const LIVE_TOOL_SLUGS = [
   "uuid-generator",
   "base64-encoder",
   "url-encoder",
+  "spark-memory-calculator",
 ] as const;
 
 export type LiveToolSlug = (typeof LIVE_TOOL_SLUGS)[number];
@@ -25,6 +27,7 @@ export const TOOL_COMPONENTS: Record<LiveToolSlug, ComponentType> = {
   "uuid-generator": UuidGeneratorTool,
   "base64-encoder": Base64EncoderTool,
   "url-encoder": UrlEncoderTool,
+  "spark-memory-calculator": SparkMemoryCalculatorTool,
 };
 
 export function isLiveTool(slug: string): slug is LiveToolSlug {

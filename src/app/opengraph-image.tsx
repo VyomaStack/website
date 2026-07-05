@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "VyomaStack — AI-Powered Developer Platform";
+export const alt = "VyomaStack — AI Workspace for Software Engineers";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,7 +16,8 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%)",
+          background:
+            "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%)",
           fontFamily: "system-ui, sans-serif",
         }}
       >
@@ -49,7 +50,7 @@ export default function OpenGraphImage() {
           </span>
         </div>
         <p style={{ fontSize: 32, color: "#94a3b8", margin: 0 }}>
-          AI-Powered Developer Platform
+          AI Workspace for Software Engineers
         </p>
         <p
           style={{
@@ -59,7 +60,7 @@ export default function OpenGraphImage() {
             fontWeight: 600,
           }}
         >
-          Build Faster. Ship Smarter.
+          Format · Explain · Fix · Generate
         </p>
         <div
           style={{
@@ -70,11 +71,11 @@ export default function OpenGraphImage() {
             color: "#cbd5e1",
           }}
         >
-          <span>SQL Formatter</span>
+          <span>AI SQL Assistant</span>
           <span>·</span>
-          <span>JSON Formatter</span>
+          <span>Spark Calculator</span>
           <span>·</span>
-          <span>JWT Decoder</span>
+          <span>JSON Studio</span>
         </div>
       </div>
     ),

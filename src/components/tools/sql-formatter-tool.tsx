@@ -19,6 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AiResultPanel } from "@/components/tools/ai-result-panel";
 
 const DIALECTS: { label: string; value: FormatOptionsWithLanguage["language"] }[] =
   [
@@ -236,11 +237,32 @@ export function SqlFormatterTool() {
             into a single line for storage or transmission.
           </p>
           <p>
-            <strong className="text-foreground">Privacy</strong> — all processing
-            happens locally in your browser. Your queries are never uploaded.
+            <strong className="text-foreground">Format</strong> runs locally in
+            your browser. <strong className="text-foreground">AI Explain</strong>{" "}
+            sends your query to our AI for analysis (optional).
           </p>
         </CardContent>
       </Card>
+
+      <AiResultPanel
+        title="AI SQL Explain"
+        description="Get a plain-English explanation, performance notes, and improvement suggestions. Powered by AI."
+        buttonLabel="Explain SQL with AI"
+        disabled={!input.trim()}
+        onGenerate={async () => {
+          const res = await fetch("/api/ai/explain-sql", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sql: input, dialect }),
+          });
+          const data = (await res.json()) as {
+            explanation?: string;
+            error?: string;
+          };
+          if (!res.ok) throw new Error(data.error ?? "Request failed");
+          return data.explanation ?? "";
+        }}
+      />
     </div>
   );
 }
