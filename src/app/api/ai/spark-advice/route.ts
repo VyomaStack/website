@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "AI is not configured. Add OPENAI_API_KEY to your environment variables.",
+            "AI is not configured. Add a free GEMINI_API_KEY from aistudio.google.com/apikey to Vercel environment variables.",
         },
         { status: 503 }
       );

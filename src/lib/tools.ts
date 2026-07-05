@@ -394,7 +394,7 @@ export const tools: Tool[] = [
       {
         question: "Is this tool free?",
         answer:
-          "Yes. Requires OPENAI_API_KEY configured in the deployment environment.",
+          "Yes. Requires a free GEMINI_API_KEY from Google AI Studio.",
       },
     ],
   },
