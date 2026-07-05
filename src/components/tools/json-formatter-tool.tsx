@@ -19,6 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AiCodePanel } from "@/components/tools/ai-result-panel";
 
 const SAMPLE_JSON = `{"name":"VyomaStack","tools":["sql-formatter","json-formatter","jwt-decoder"],"meta":{"version":1,"public":true}}`;
 
@@ -218,6 +219,35 @@ export function JsonFormatterTool() {
           </div>
         </CardContent>
       </Card>
+
+      <AiCodePanel
+        title="AI JSON Studio"
+        description="Generate Java POJOs, TypeScript interfaces, OpenAPI schemas, or SQL tables from your JSON."
+        generateLabel="Generate"
+        disabled={!input.trim()}
+        classNameField
+        defaultClassName="RootModel"
+        types={[
+          { value: "java-pojo", label: "Java POJOs" },
+          { value: "typescript", label: "TypeScript interfaces" },
+          { value: "openapi", label: "OpenAPI schema" },
+          { value: "sql", label: "SQL CREATE TABLE" },
+        ]}
+        onGenerate={async (type, className) => {
+          const res = await fetch("/api/ai/json-generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              json: input,
+              type,
+              className,
+            }),
+          });
+          const data = (await res.json()) as { result?: string; error?: string };
+          if (!res.ok) throw new Error(data.error ?? "Request failed");
+          return data.result ?? "";
+        }}
+      />
     </div>
   );
 }

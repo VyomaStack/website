@@ -26,7 +26,7 @@ export function SiteHeader() {
             SQL AI
           </Link>
           <Link
-            href="/tools/spark-memory-calculator"
+            href="/tools/spark-error-explainer"
             className="transition-colors hover:text-foreground"
           >
             Spark

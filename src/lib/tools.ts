@@ -97,22 +97,28 @@ export const tools: Tool[] = [
     slug: "json-formatter",
     name: "JSON Formatter",
     category: "JSON",
-    h1: "Free JSON Formatter & Validator Online",
-    seoTitle: "JSON Formatter & Validator Online — Free | VyomaStack",
+    h1: "Free JSON Formatter & AI JSON Studio",
+    seoTitle: "JSON Formatter & AI Studio — POJO, TypeScript, OpenAPI | VyomaStack",
     seoDescription:
-      "Free online JSON formatter, validator, and minifier. Beautify JSON with syntax highlighting, validate structure, and compress to a single line. Runs in your browser.",
+      "Free JSON formatter, validator, and AI studio. Generate Java POJOs, TypeScript interfaces, OpenAPI schemas, and SQL tables from JSON. Format and minify in your browser.",
     description:
-      "Format, validate, and minify JSON instantly. Pretty-print with custom indentation or compress to one line. 100% private — runs in your browser.",
+      "Format, validate, and minify JSON — then generate Java POJOs, TypeScript interfaces, OpenAPI schemas, or SQL tables with AI.",
     keywords: [
       "json formatter",
+      "json to java pojo",
+      "json to typescript",
+      "json to openapi",
       "json validator",
       "json beautifier",
-      "format json online",
-      "json minifier",
-      "pretty print json",
+      "json studio",
     ],
-    relatedTools: ["sql-formatter", "jwt-decoder"],
+    relatedTools: ["sql-formatter", "jwt-decoder", "base64-encoder"],
     faqs: [
+      {
+        question: "What is AI JSON Studio?",
+        answer:
+          "AI JSON Studio generates Java POJOs, TypeScript interfaces, OpenAPI 3.0 schemas, and PostgreSQL CREATE TABLE statements from your JSON data using AI.",
+      },
       {
         question: "What is a JSON formatter?",
         answer:
@@ -124,19 +130,14 @@ export const tools: Tool[] = [
           "Yes. Click Validate to check if your JSON is syntactically correct. Errors show the exact parse failure message.",
       },
       {
-        question: "Is my JSON data sent to a server?",
+        question: "Is formatting done in the browser?",
         answer:
-          "No. All formatting and validation runs in your browser. Your data never leaves your device.",
-      },
-      {
-        question: "Can I minify JSON?",
-        answer:
-          "Yes. Use the Minify button to remove all whitespace and compress JSON to a single line.",
+          "Yes. Format, validate, and minify run locally. AI generation sends JSON to our API for code generation.",
       },
       {
         question: "Is this JSON formatter free?",
         answer:
-          "Yes. Completely free with no signup, no limits, and no watermarks.",
+          "Yes. Formatting is completely free. AI generation requires an API key configured by the site operator.",
       },
     ],
   },
@@ -331,7 +332,7 @@ export const tools: Tool[] = [
       "apache spark memory",
       "spark submit memory",
     ],
-    relatedTools: ["sql-formatter", "json-formatter"],
+    relatedTools: ["spark-error-explainer", "sql-formatter"],
     faqs: [
       {
         question: "How does Spark executor memory work?",
@@ -352,6 +353,48 @@ export const tools: Tool[] = [
         question: "Is this calculator free?",
         answer:
           "Yes. Memory calculation runs in your browser. AI recommendations require an API key configured by the site operator.",
+      },
+    ],
+  },
+  {
+    slug: "spark-error-explainer",
+    name: "Spark Error Explainer",
+    category: "Spark",
+    h1: "AI Spark Error Explainer",
+    seoTitle: "Spark Error Explainer — AI Stack Trace Analyzer | VyomaStack",
+    seoDescription:
+      "Free AI Spark error explainer. Paste OOM errors, shuffle failures, and stack traces. Get root cause analysis, fixes, and Spark config recommendations.",
+    description:
+      "Paste Spark error logs and stack traces. AI explains root cause, fixes, prevention tips, and relevant configuration keys.",
+    keywords: [
+      "spark error explainer",
+      "spark oom error",
+      "spark stack trace analyzer",
+      "spark shuffle failure",
+      "apache spark debugging",
+      "spark executor lost",
+    ],
+    relatedTools: ["spark-memory-calculator", "sql-formatter"],
+    faqs: [
+      {
+        question: "What Spark errors can this analyze?",
+        answer:
+          "OOM errors, SparkOutOfMemoryError, shuffle fetch failures, stage failures, executor lost, container killed, serialization errors, and general driver/executor stack traces.",
+      },
+      {
+        question: "How is this different from pasting into ChatGPT?",
+        answer:
+          "VyomaStack Spark Error Explainer is tuned for Spark-specific failures with structured output: root cause, fix, prevention, and relevant spark-submit flags and config keys.",
+      },
+      {
+        question: "Is my error log sent to a server?",
+        answer:
+          "Yes, for AI analysis the log is sent to our AI API. Redact sensitive hostnames and credentials before pasting production logs.",
+      },
+      {
+        question: "Is this tool free?",
+        answer:
+          "Yes. Requires OPENAI_API_KEY configured in the deployment environment.",
       },
     ],
   },

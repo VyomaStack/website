@@ -41,16 +41,16 @@ const aiHighlights = [
     badge: "Live",
   },
   {
-    title: "Spark Memory Calculator",
-    description: "Calculate executor memory, then get AI tuning and cost optimization advice.",
-    href: "/tools/spark-memory-calculator",
+    title: "AI JSON Studio",
+    description: "Format JSON, generate Java POJOs, TypeScript interfaces, and OpenAPI schemas.",
+    href: "/tools/json-formatter",
     badge: "Live",
   },
   {
-    title: "AI JSON Studio",
-    description: "Format JSON, generate POJOs, TypeScript interfaces, and schemas.",
-    href: "/tools/json-formatter",
-    badge: "Coming soon",
+    title: "Spark AI Tools",
+    description: "Memory calculator with AI tuning and AI error explainer for stack traces.",
+    href: "/tools/spark-error-explainer",
+    badge: "Live",
   },
 ];
 
