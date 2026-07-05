@@ -95,7 +95,7 @@ export default function Home() {
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search tools — SQL, Spark, JSON, Password, QR..."
+              placeholder="Search tools — SQL, Spark, JSON, Regex, Cron..."
               className="h-11 pl-10"
             />
           </div>

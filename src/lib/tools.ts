@@ -443,6 +443,92 @@ export const tools: Tool[] = [
     ],
   },
   {
+    slug: "regex-tester",
+    name: "Regex Tester",
+    category: "Developer",
+    h1: "Free Online Regex Tester",
+    seoTitle: "Regex Tester — Test Regular Expressions Online | VyomaStack",
+    seoDescription:
+      "Free online regex tester. Test regular expressions with flags, capture groups, and highlighted matches. Debug patterns for JavaScript, Python, and Java. Runs in your browser.",
+    description:
+      "Test regular expressions against sample text. Toggle flags, see matches with capture groups, and highlighted results. Runs entirely in your browser.",
+    keywords: [
+      "regex tester",
+      "regular expression tester",
+      "regex online",
+      "test regex",
+      "regex debugger",
+      "regex matcher",
+      "javascript regex tester",
+    ],
+    relatedTools: ["json-formatter", "url-encoder", "hash-generator"],
+    faqs: [
+      {
+        question: "What regex flags are supported?",
+        answer:
+          "Global (g), ignore case (i), multiline (m), dotall (s), unicode (u), and sticky (y) — matching JavaScript RegExp flags.",
+      },
+      {
+        question: "Can I see capture groups?",
+        answer:
+          "Yes. Each match shows numbered capture groups from parentheses in your pattern.",
+      },
+      {
+        question: "Does this work for Python or Java regex?",
+        answer:
+          "This tester uses JavaScript RegExp syntax. Most basic patterns are portable, but lookaheads and Unicode features may differ across languages.",
+      },
+      {
+        question: "Is my data sent to a server?",
+        answer:
+          "No. All matching runs entirely in your browser.",
+      },
+    ],
+  },
+  {
+    slug: "cron-generator",
+    name: "Cron Generator",
+    category: "Developer",
+    h1: "Free Cron Expression Generator",
+    seoTitle: "Cron Generator — Build Cron Expressions Online | VyomaStack",
+    seoDescription:
+      "Free cron expression generator. Build schedules with presets, see human-readable descriptions and next run times. For Linux crontab, Kubernetes, GitHub Actions, and Spring.",
+    description:
+      "Build cron expressions with presets or a field-by-field builder. Human-readable description and next 5 run times in your local timezone.",
+    keywords: [
+      "cron generator",
+      "cron expression generator",
+      "cron builder",
+      "crontab generator",
+      "cron schedule maker",
+      "kubernetes cronjob generator",
+      "github actions cron",
+    ],
+    relatedTools: ["regex-tester", "uuid-generator", "spark-memory-calculator"],
+    faqs: [
+      {
+        question: "What cron format does this use?",
+        answer:
+          "Standard 5-field Unix cron: minute hour day-of-month month day-of-week. Example: 0 9 * * 1-5 runs weekdays at 9:00 AM.",
+      },
+      {
+        question: "Where can I use these cron expressions?",
+        answer:
+          "Linux crontab, Kubernetes CronJob, GitHub Actions schedule, AWS EventBridge, Quartz scheduler, and Spring @Scheduled(cron = \"...\").",
+      },
+      {
+        question: "What do the day-of-week numbers mean?",
+        answer:
+          "0 = Sunday, 1 = Monday, through 6 = Saturday. Use ranges like 1-5 for weekdays or lists like 0,6 for weekends.",
+      },
+      {
+        question: "Can I see when the job will run next?",
+        answer:
+          "Yes. The tool shows the next 5 execution times in your local timezone based on the current expression.",
+      },
+    ],
+  },
+  {
     slug: "spark-memory-calculator",
     name: "Spark Memory Calculator",
     category: "Spark",
