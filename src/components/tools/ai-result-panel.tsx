@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AiMarkdown } from "@/components/tools/ai-markdown";
+import { useAiCooldown } from "@/hooks/use-ai-cooldown";
 
 interface AiResultPanelProps {
   title: string;
@@ -31,20 +32,32 @@ export function AiResultPanel({
   const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const {
+    cooldown,
+    canRequest,
+    isRateLimitError,
+    triggerCooldown,
+    cooldownLabel,
+  } = useAiCooldown();
 
   async function handleGenerate() {
+    if (!canRequest) return;
     setLoading(true);
     setError(null);
     try {
       const text = await onGenerate();
       setResult(text);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong");
+      const message = e instanceof Error ? e.message : "Something went wrong";
+      setError(message);
       setResult(null);
+      if (isRateLimitError(message)) triggerCooldown();
     } finally {
       setLoading(false);
     }
   }
+
+  const buttonDisabled = disabled || loading || !canRequest;
 
   return (
     <Card className="border-primary/20 bg-primary/[0.02]">
@@ -53,16 +66,21 @@ export function AiResultPanel({
           <Sparkles className="size-5 text-primary" />
           <CardTitle>{title}</CardTitle>
         </div>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>
+          {description} Free tier: ~15 requests/min — wait a few seconds between
+          clicks.
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Button onClick={handleGenerate} disabled={disabled || loading}>
+        <Button onClick={handleGenerate} disabled={buttonDisabled}>
           {loading ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
             <Sparkles className="size-4" />
           )}
-          {loading ? "Thinking..." : buttonLabel}
+          {loading
+            ? "Thinking..."
+            : cooldownLabel ?? buttonLabel}
         </Button>
 
         {error && (
@@ -70,6 +88,12 @@ export function AiResultPanel({
             <AlertCircle className="mt-0.5 size-4 shrink-0" />
             <span>{error}</span>
           </div>
+        )}
+
+        {cooldown > 0 && !error && (
+          <p className="text-sm text-muted-foreground">
+            Cooldown: {cooldown}s remaining before next request.
+          </p>
         )}
 
         {result && (
@@ -109,16 +133,26 @@ export function AiCodePanel({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const {
+    cooldown,
+    canRequest,
+    isRateLimitError,
+    triggerCooldown,
+    cooldownLabel,
+  } = useAiCooldown();
 
   async function handleGenerate() {
+    if (!canRequest) return;
     setLoading(true);
     setError(null);
     try {
       const text = await onGenerate(type, className);
       setResult(text);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong");
+      const message = e instanceof Error ? e.message : "Something went wrong";
+      setError(message);
       setResult(null);
+      if (isRateLimitError(message)) triggerCooldown();
     } finally {
       setLoading(false);
     }
@@ -132,6 +166,8 @@ export function AiCodePanel({
     setTimeout(() => setCopied(false), 2000);
   }
 
+  const buttonDisabled = disabled || loading || !canRequest;
+
   return (
     <Card className="border-primary/20 bg-primary/[0.02]">
       <CardHeader>
@@ -139,7 +175,9 @@ export function AiCodePanel({
           <Sparkles className="size-5 text-primary" />
           <CardTitle>{title}</CardTitle>
         </div>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>
+          {description} Free tier: wait a few seconds between generations.
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-wrap items-center gap-3">
@@ -165,13 +203,15 @@ export function AiCodePanel({
             />
           )}
 
-          <Button onClick={handleGenerate} disabled={disabled || loading}>
+          <Button onClick={handleGenerate} disabled={buttonDisabled}>
             {loading ? (
               <Loader2 className="size-4 animate-spin" />
             ) : (
               <Sparkles className="size-4" />
             )}
-            {loading ? "Generating..." : generateLabel}
+            {loading
+              ? "Generating..."
+              : cooldownLabel ?? generateLabel}
           </Button>
         </div>
 
