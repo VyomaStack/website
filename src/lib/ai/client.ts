@@ -31,8 +31,8 @@ export async function generateAiResponse(
   });
 
   if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`OpenAI error: ${response.status} ${err}`);
+    const errText = await response.text();
+    throw new Error(parseOpenAiError(response.status, errText));
   }
 
   const data = (await response.json()) as {
@@ -42,4 +42,28 @@ export async function generateAiResponse(
   const content = data.choices?.[0]?.message?.content?.trim();
   if (!content) throw new Error("Empty AI response");
   return content;
+}
+
+function parseOpenAiError(status: number, body: string): string {
+  try {
+    const parsed = JSON.parse(body) as {
+      error?: { message?: string; code?: string; type?: string };
+    };
+    const code = parsed.error?.code;
+    const message = parsed.error?.message;
+
+    if (code === "insufficient_quota" || status === 429) {
+      return "OpenAI quota exceeded. Add billing and credits at platform.openai.com/settings/billing, then try again.";
+    }
+    if (status === 401) {
+      return "Invalid OpenAI API key. Check OPENAI_API_KEY in Vercel environment variables.";
+    }
+    if (status === 429) {
+      return "OpenAI rate limit hit. Wait a moment and try again.";
+    }
+    if (message) return message;
+  } catch {
+    // fall through
+  }
+  return `AI request failed (${status}). Check your OpenAI account billing and API key.`;
 }
