@@ -34,6 +34,10 @@ export const metadata: Metadata = {
       "500+ developer tools for SQL, JSON, security, Spark, and more.",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

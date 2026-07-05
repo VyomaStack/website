@@ -1,9 +1,12 @@
 import Link from "next/link";
 
-import { tools } from "@/lib/tools";
+import { LIVE_TOOL_SLUGS } from "@/lib/live-tools";
+import { getTool } from "@/lib/tools";
 
 export function SiteFooter() {
-  const liveTools = tools.filter((t) => t.slug === "sql-formatter");
+  const liveTools = LIVE_TOOL_SLUGS.map((slug) => getTool(slug)).filter(
+    Boolean
+  );
 
   return (
     <footer className="border-t border-border bg-muted/30">
@@ -19,18 +22,23 @@ export function SiteFooter() {
         <div>
           <p className="text-sm font-semibold">Tools</p>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            {liveTools.map((tool) => (
-              <li key={tool.slug}>
-                <Link
-                  href={`/tools/${tool.slug}`}
-                  className="transition-colors hover:text-primary"
-                >
-                  {tool.name}
-                </Link>
-              </li>
-            ))}
+            {liveTools.map((tool) =>
+              tool ? (
+                <li key={tool.slug}>
+                  <Link
+                    href={`/tools/${tool.slug}`}
+                    className="transition-colors hover:text-primary"
+                  >
+                    {tool.name}
+                  </Link>
+                </li>
+              ) : null
+            )}
             <li>
-              <Link href="/#tools" className="transition-colors hover:text-primary">
+              <Link
+                href="/#tools"
+                className="transition-colors hover:text-primary"
+              >
                 All tools →
               </Link>
             </li>
@@ -41,7 +49,10 @@ export function SiteFooter() {
           <p className="text-sm font-semibold">Platform</p>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
-              <Link href="/#categories" className="transition-colors hover:text-primary">
+              <Link
+                href="/#categories"
+                className="transition-colors hover:text-primary"
+              >
                 Categories
               </Link>
             </li>

@@ -1,16 +1,15 @@
 import type { MetadataRoute } from "next";
 
-import { SITE_URL, tools } from "@/lib/tools";
+import { LIVE_TOOL_SLUGS } from "@/lib/live-tools";
+import { SITE_URL } from "@/lib/tools";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const toolPages = tools
-    .filter((t) => t.slug === "sql-formatter")
-    .map((tool) => ({
-      url: `${SITE_URL}/tools/${tool.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    }));
+  const toolPages = LIVE_TOOL_SLUGS.map((slug) => ({
+    url: `${SITE_URL}/tools/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
 
   return [
     {

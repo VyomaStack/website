@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { categories, tools } from "@/lib/tools";
+import { LIVE_TOOL_SLUGS } from "@/lib/live-tools";
 
 const features = [
   {
@@ -30,7 +31,7 @@ const features = [
 ];
 
 export default function Home() {
-  const liveSlugs = new Set(["sql-formatter"]);
+  const liveSlugs = new Set<string>(LIVE_TOOL_SLUGS);
 
   return (
     <>
@@ -150,19 +151,20 @@ export default function Home() {
       {/* Latest */}
       <section className="mx-auto max-w-6xl px-6 py-12">
         <h2 className="text-2xl font-semibold tracking-tight">Latest Tools</h2>
-        <Card className="mt-4" size="sm">
-          <CardHeader>
-            <CardTitle>SQL Formatter</CardTitle>
-            <CardDescription>
-              Our first live tool — beautify and minify SQL in your browser.
-            </CardDescription>
-            <Link href="/tools/sql-formatter">
-              <Button variant="link" className="h-auto p-0">
-                Open SQL Formatter →
-              </Button>
-            </Link>
-          </CardHeader>
-        </Card>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          {tools
+            .filter((t) => liveSlugs.has(t.slug))
+            .map((tool) => (
+              <Link key={tool.slug} href={`/tools/${tool.slug}`}>
+                <Card size="sm" className="h-full transition-all hover:ring-primary/40">
+                  <CardHeader>
+                    <CardTitle>{tool.name}</CardTitle>
+                    <CardDescription>{tool.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-12">
