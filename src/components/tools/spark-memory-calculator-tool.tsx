@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 
 import { AiResultPanel } from "@/components/tools/ai-result-panel";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
