@@ -186,13 +186,127 @@ export const tools: Tool[] = [
     slug: "uuid-generator",
     name: "UUID Generator",
     category: "Developer",
-    description: "Generate random UUID v4 identifiers.",
+    h1: "Free UUID Generator Online",
+    seoTitle: "UUID Generator — Free UUID v4 Online | VyomaStack",
+    seoDescription:
+      "Free online UUID v4 generator. Create one or bulk random UUIDs instantly. Copy to clipboard. Cryptographically secure, runs in your browser — no signup.",
+    description:
+      "Generate random UUID v4 identifiers instantly. Create single or bulk UUIDs, copy to clipboard. Cryptographically secure — runs in your browser.",
+    keywords: [
+      "uuid generator",
+      "generate uuid",
+      "uuid v4",
+      "random uuid",
+      "guid generator",
+      "bulk uuid generator",
+    ],
+    relatedTools: ["base64-encoder", "jwt-decoder"],
+    faqs: [
+      {
+        question: "What is a UUID?",
+        answer:
+          "A UUID (Universally Unique Identifier) is a 128-bit identifier used to uniquely identify objects in software systems. Version 4 UUIDs are randomly generated.",
+      },
+      {
+        question: "What version of UUID does this generate?",
+        answer:
+          "This tool generates UUID version 4 (random) using the browser's cryptographically secure crypto.randomUUID() API.",
+      },
+      {
+        question: "Can I generate multiple UUIDs at once?",
+        answer:
+          "Yes. Set the count (1–100) and click Generate to create multiple UUIDs. Use Copy All to copy them as a list.",
+      },
+      {
+        question: "Is this UUID generator free?",
+        answer:
+          "Yes. Completely free with no limits, no signup, and no watermarks.",
+      },
+    ],
   },
   {
     slug: "base64-encoder",
     name: "Base64 Encoder",
     category: "Developer",
-    description: "Encode and decode Base64 strings.",
+    h1: "Free Base64 Encoder & Decoder Online",
+    seoTitle: "Base64 Encoder & Decoder Online — Free | VyomaStack",
+    seoDescription:
+      "Free online Base64 encoder and decoder. Convert text to Base64 and back. Supports UTF-8. Runs entirely in your browser — private and instant.",
+    description:
+      "Encode text to Base64 or decode Base64 strings instantly. Full UTF-8 support. Swap, copy, and clear — all in your browser.",
+    keywords: [
+      "base64 encoder",
+      "base64 decoder",
+      "base64 encode",
+      "base64 decode online",
+      "text to base64",
+      "base64 converter",
+    ],
+    relatedTools: ["url-encoder", "jwt-decoder", "uuid-generator"],
+    faqs: [
+      {
+        question: "What is Base64 encoding?",
+        answer:
+          "Base64 is a binary-to-text encoding scheme that represents binary data as ASCII text. It's commonly used for embedding data in JSON, XML, email, and URLs.",
+      },
+      {
+        question: "Does this support UTF-8?",
+        answer:
+          "Yes. The encoder and decoder handle multi-byte UTF-8 characters correctly, including emoji and non-Latin scripts.",
+      },
+      {
+        question: "Is my data sent to a server?",
+        answer:
+          "No. All encoding and decoding runs in your browser. Your data never leaves your device.",
+      },
+      {
+        question: "Can I decode Base64 as well as encode?",
+        answer:
+          "Yes. Switch to Decode mode or use the Swap button to move the output back to input and decode it.",
+      },
+    ],
+  },
+  {
+    slug: "url-encoder",
+    name: "URL Encoder",
+    category: "Developer",
+    h1: "Free URL Encoder & Decoder Online",
+    seoTitle: "URL Encoder & Decoder Online — Free | VyomaStack",
+    seoDescription:
+      "Free online URL encoder and decoder. Encode query strings with encodeURIComponent or full URLs with encodeURI. Decode percent-encoded URLs instantly.",
+    description:
+      "Encode and decode URLs and query parameters. Supports encodeURIComponent and encodeURI modes. Runs entirely in your browser.",
+    keywords: [
+      "url encoder",
+      "url decoder",
+      "encode url online",
+      "url encode decode",
+      "percent encoding",
+      "encodeURIComponent",
+    ],
+    relatedTools: ["base64-encoder", "json-formatter"],
+    faqs: [
+      {
+        question: "What is URL encoding?",
+        answer:
+          "URL encoding (percent-encoding) converts characters into a format that can be safely transmitted in URLs, replacing unsafe characters with % followed by hex digits.",
+      },
+      {
+        question: "encodeURIComponent vs encodeURI?",
+        answer:
+          "encodeURIComponent encodes all special characters and is used for individual query parameter values. encodeURI encodes a full URL but preserves characters like /, :, ?, and =.",
+      },
+      {
+        question: "Can I decode percent-encoded URLs?",
+        answer:
+          "Yes. Switch to Decode mode to convert percent-encoded strings back to readable text.",
+      },
+      {
+        question: "Is this URL encoder free?",
+        answer:
+          "Yes. Completely free, no signup, runs in your browser.",
+      },
+    ],
   },
   {
     slug: "spark-memory-calculator",
