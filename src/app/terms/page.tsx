@@ -75,7 +75,8 @@ export default function TermsPage() {
         <p>
           The VyomaStack name, branding, site design, and original content are
           owned by VyomaStack. Open-source components used in the project are
-          subject to their respective licenses (see our GitHub repository).
+          Open-source components used in the project are subject to their
+          respective licenses.
         </p>
       </LegalSection>
 

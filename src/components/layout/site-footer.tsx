@@ -88,14 +88,6 @@ export function SiteFooter() {
           <Link href="/terms" className="transition-colors hover:text-primary">
             Terms
           </Link>
-          <a
-            href="https://github.com/VyomaStack/website"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors hover:text-primary"
-          >
-            GitHub
-          </a>
         </p>
       </div>
     </footer>
