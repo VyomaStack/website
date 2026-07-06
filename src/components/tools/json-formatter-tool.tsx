@@ -23,12 +23,16 @@ import { AiCodePanel } from "@/components/tools/ai-result-panel";
 
 const SAMPLE_JSON = `{"name":"VyomaStack","tools":["sql-formatter","json-formatter","jwt-decoder"],"meta":{"version":1,"public":true}}`;
 
+function formatJsonOutput(json: string, indent: number): string {
+  return JSON.stringify(JSON.parse(json) as unknown, null, indent);
+}
+
 export function JsonFormatterTool() {
   const [input, setInput] = useState(SAMPLE_JSON);
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState(() => formatJsonOutput(SAMPLE_JSON, 2));
   const [indent, setIndent] = useState(2);
   const [error, setError] = useState<string | null>(null);
-  const [valid, setValid] = useState<boolean | null>(null);
+  const [valid, setValid] = useState<boolean | null>(true);
   const [copied, setCopied] = useState(false);
 
   const parseJson = useCallback((text: string) => {
@@ -43,8 +47,7 @@ export function JsonFormatterTool() {
       return;
     }
     try {
-      const parsed = parseJson(input);
-      setOutput(JSON.stringify(parsed, null, indent));
+      setOutput(formatJsonOutput(input, indent));
       setError(null);
       setValid(true);
     } catch (e) {

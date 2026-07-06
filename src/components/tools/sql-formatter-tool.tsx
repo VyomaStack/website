@@ -52,9 +52,21 @@ function minifySql(sql: string): string {
     .trim();
 }
 
+function formatSqlOutput(
+  sql: string,
+  dialect: FormatOptionsWithLanguage["language"]
+): string {
+  return format(sql, {
+    language: dialect,
+    tabWidth: 2,
+    keywordCase: "upper",
+    linesBetweenQueries: 2,
+  });
+}
+
 export function SqlFormatterTool() {
   const [input, setInput] = useState(SAMPLE_SQL);
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState(() => formatSqlOutput(SAMPLE_SQL, "sql"));
   const [dialect, setDialect] =
     useState<FormatOptionsWithLanguage["language"]>("sql");
   const [error, setError] = useState<string | null>(null);
@@ -67,13 +79,7 @@ export function SqlFormatterTool() {
       return;
     }
     try {
-      const formatted = format(input, {
-        language: dialect,
-        tabWidth: 2,
-        keywordCase: "upper",
-        linesBetweenQueries: 2,
-      });
-      setOutput(formatted);
+      setOutput(formatSqlOutput(input, dialect));
       setError(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to format SQL.");

@@ -9,4 +9,4 @@ export const TRUST_STATS = [
   { value: "Free", label: "No Login Required" },
 ] as const;
 
-export const AI_TOOL_COUNT = 5;
+export const AI_TOOL_COUNT = 6;

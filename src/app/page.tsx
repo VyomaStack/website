@@ -1,6 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
+import {
+  HomeSearchBar,
+  HomeSearchProvider,
+  HomeToolGrid,
+} from "@/components/home/home-tool-search";
 import { ProductShowcase } from "@/components/marketing/product-screenshots";
 import { TrustStats } from "@/components/marketing/trust-stats";
 import { Button } from "@/components/ui/button";
@@ -10,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { LIVE_TOOL_SLUGS } from "@/lib/live-tools";
 import { AI_TOOL_COUNT } from "@/lib/site-stats";
 import { categories, tools } from "@/lib/tools";
@@ -40,7 +44,7 @@ export default function Home() {
   const liveSlugs = new Set<string>(LIVE_TOOL_SLUGS);
 
   return (
-    <>
+    <HomeSearchProvider>
       {/* Hero — brand-first */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/15 via-background to-background" />
@@ -79,14 +83,7 @@ export default function Home() {
             no login required
           </p>
 
-          <div className="relative mt-2 w-full max-w-xl">
-            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search the workspace — SQL, Spark, JSON, Regex..."
-              className="h-11 pl-10"
-            />
-          </div>
+          <HomeSearchBar />
         </div>
       </section>
 
@@ -123,65 +120,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* All Tools */}
-      <section id="tools" className="mx-auto max-w-6xl px-6 py-12">
-        <h2 className="text-2xl font-semibold tracking-tight">
-          The workspace toolkit
-        </h2>
-        <p className="mt-1 text-muted-foreground">
-          Browser-secure utilities with AI where it matters. More launching
-          every week.
-        </p>
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.map((tool) => {
-            const isLive = liveSlugs.has(tool.slug);
-            const isAi =
-              tool.slug === "sql-formatter" ||
-              tool.slug === "json-formatter" ||
-              tool.slug === "spark-memory-calculator" ||
-              tool.slug === "spark-error-explainer";
-
-            const content = (
-              <Card
-                className={
-                  isLive
-                    ? "transition-all hover:ring-primary/40"
-                    : "opacity-70"
-                }
-              >
-                <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-primary">
-                      {tool.category}
-                    </span>
-                    {isAi && isLive && (
-                      <span className="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
-                        <Sparkles className="size-2.5" />
-                        AI
-                      </span>
-                    )}
-                  </div>
-                  <CardTitle>{tool.name}</CardTitle>
-                  <CardDescription>{tool.description}</CardDescription>
-                  {!isLive && (
-                    <span className="text-xs text-muted-foreground">
-                      Coming soon
-                    </span>
-                  )}
-                </CardHeader>
-              </Card>
-            );
-
-            return isLive ? (
-              <Link key={tool.slug} href={`/tools/${tool.slug}`}>
-                {content}
-              </Link>
-            ) : (
-              <div key={tool.slug}>{content}</div>
-            );
-          })}
-        </div>
-      </section>
+      <HomeToolGrid tools={tools} liveSlugs={liveSlugs} />
 
       {/* Categories */}
       <section id="categories" className="mx-auto max-w-6xl px-6 py-12">
@@ -216,6 +155,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-    </>
+    </HomeSearchProvider>
   );
 }
