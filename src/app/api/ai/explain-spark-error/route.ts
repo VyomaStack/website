@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { generateAiResponse, isAiConfigured } from "@/lib/ai/client";
+import { generateWithFallback } from "@/lib/ai/client";
+import { explainSparkErrorOffline } from "@/lib/ai/fallbacks/spark";
 
 export async function POST(request: Request) {
   try {
@@ -11,16 +12,6 @@ export async function POST(request: Request) {
 
     if (!errorLog?.trim()) {
       return NextResponse.json({ error: "Error log is required" }, { status: 400 });
-    }
-
-    if (!isAiConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "AI is not configured. Add a free GEMINI_API_KEY from aistudio.google.com/apikey to Vercel environment variables.",
-        },
-        { status: 503 }
-      );
     }
 
     const systemPrompt = `You are an Apache Spark expert who debugs production failures daily.
@@ -41,9 +32,13 @@ ${errorLog.trim()}
 
 ${context?.trim() ? `Additional context from the user:\n${context.trim()}` : ""}`;
 
-    const explanation = await generateAiResponse(systemPrompt, userPrompt);
+    const { text, source } = await generateWithFallback(
+      systemPrompt,
+      userPrompt,
+      () => explainSparkErrorOffline(errorLog.trim())
+    );
 
-    return NextResponse.json({ explanation });
+    return NextResponse.json({ explanation: text, source });
   } catch (e) {
     const message =
       e instanceof Error ? e.message : "Failed to analyze error";

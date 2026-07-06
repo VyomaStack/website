@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { generateAiResponse, isAiConfigured } from "@/lib/ai/client";
+import { generateWithFallback } from "@/lib/ai/client";
+import { explainSqlOffline } from "@/lib/ai/fallbacks/sql-explain";
 
 export async function POST(request: Request) {
   try {
@@ -13,15 +14,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "SQL is required" }, { status: 400 });
     }
 
-    if (!isAiConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "AI is not configured. Add a free GEMINI_API_KEY from aistudio.google.com/apikey to Vercel environment variables.",
-        },
-        { status: 503 }
-      );
-    }
+    const dialectLabel = dialect ?? "standard SQL";
 
     const systemPrompt = `You are an expert SQL engineer and database performance specialist.
 Explain SQL queries clearly for software engineers. Structure your response with these sections using markdown headers:
@@ -32,7 +25,7 @@ Explain SQL queries clearly for software engineers. Structure your response with
 
 Be concise but thorough. Use bullet points where helpful. If the dialect is specified, tailor explanations to that engine.`;
 
-    const userPrompt = `Dialect: ${dialect ?? "standard SQL"}
+    const userPrompt = `Dialect: ${dialectLabel}
 
 Explain this SQL query:
 
@@ -40,9 +33,13 @@ Explain this SQL query:
 ${sql.trim()}
 \`\`\``;
 
-    const explanation = await generateAiResponse(systemPrompt, userPrompt);
+    const { text, source } = await generateWithFallback(
+      systemPrompt,
+      userPrompt,
+      () => explainSqlOffline(sql.trim(), dialectLabel)
+    );
 
-    return NextResponse.json({ explanation });
+    return NextResponse.json({ explanation: text, source });
   } catch (e) {
     const message =
       e instanceof Error ? e.message : "Failed to generate explanation";

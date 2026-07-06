@@ -246,7 +246,7 @@ export function SqlFormatterTool() {
 
       <AiResultPanel
         title="AI SQL Explain"
-        description="Get a plain-English explanation, performance notes, and improvement suggestions. Powered by AI."
+        description="Plain-English explanation, performance notes, and improvements. Works instantly — AI-enhanced when available."
         buttonLabel="Explain SQL with AI"
         disabled={!input.trim()}
         onGenerate={async () => {
@@ -257,10 +257,14 @@ export function SqlFormatterTool() {
           });
           const data = (await res.json()) as {
             explanation?: string;
+            source?: "ai" | "instant";
             error?: string;
           };
           if (!res.ok) throw new Error(data.error ?? "Request failed");
-          return data.explanation ?? "";
+          return {
+            text: data.explanation ?? "",
+            source: data.source,
+          };
         }}
       />
     </div>

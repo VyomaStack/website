@@ -2,62 +2,113 @@ import { createHash } from "crypto";
 
 const GEMINI_API_KEY =
   process.env.GEMINI_API_KEY ?? process.env.GOOGLE_AI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.0-flash-lite";
 
-const RETRY_DELAYS_MS = [2000, 5000, 10000];
-const CACHE_TTL_MS = 10 * 60 * 1000;
+const MODEL_CHAIN = (
+  process.env.GEMINI_MODEL
+    ? [process.env.GEMINI_MODEL]
+    : ["gemini-2.0-flash-lite", "gemini-2.0-flash", "gemini-1.5-flash"]
+) as string[];
+
+const RETRY_DELAYS_MS = [1500, 3000];
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour — helps across warm instances
 
 const responseCache = new Map<string, { result: string; expires: number }>();
+
+export type AiSource = "ai" | "instant";
+
+export interface AiResponse {
+  text: string;
+  source: AiSource;
+}
 
 export function isAiConfigured(): boolean {
   return Boolean(GEMINI_API_KEY);
 }
 
-export async function generateAiResponse(
+export function isRateLimitError(message: string): boolean {
+  const lower = message.toLowerCase();
+  return (
+    lower.includes("rate_limit") ||
+    lower.includes("rate limit") ||
+    lower.includes("resource_exhausted") ||
+    lower.includes("quota") ||
+    lower.includes("free tier")
+  );
+}
+
+/**
+ * Try Gemini first; on rate limit / outage, return instant fallback so users always get a result.
+ */
+export async function generateWithFallback(
   systemPrompt: string,
-  userPrompt: string
-): Promise<string> {
+  userPrompt: string,
+  fallback: () => string
+): Promise<AiResponse> {
   if (!GEMINI_API_KEY) {
-    throw new Error("AI_NOT_CONFIGURED");
+    return { text: fallback(), source: "instant" };
   }
 
   const cacheKey = hashPrompt(systemPrompt, userPrompt);
   const cached = responseCache.get(cacheKey);
   if (cached && cached.expires > Date.now()) {
-    return cached.result;
+    return { text: cached.result, source: "ai" };
   }
 
+  try {
+    const text = await generateAiResponseRaw(systemPrompt, userPrompt);
+    responseCache.set(cacheKey, {
+      result: text,
+      expires: Date.now() + CACHE_TTL_MS,
+    });
+    return { text, source: "ai" };
+  } catch (e) {
+    const message = e instanceof Error ? e.message : "";
+    if (isRateLimitError(message) || message.includes("AI request failed")) {
+      return { text: fallback(), source: "instant" };
+    }
+    // Auth / config errors — still give users something useful
+    if (
+      message.includes("API key") ||
+      message.includes("PERMISSION_DENIED") ||
+      message.includes("AI_NOT_CONFIGURED")
+    ) {
+      return { text: fallback(), source: "instant" };
+    }
+    throw new Error(formatErrorForUser(message || "AI request failed"));
+  }
+}
+
+async function generateAiResponseRaw(
+  systemPrompt: string,
+  userPrompt: string
+): Promise<string> {
   let lastError: Error | null = null;
 
-  for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
-    if (attempt > 0) {
-      await sleep(RETRY_DELAYS_MS[attempt - 1]);
-    }
+  for (const model of MODEL_CHAIN) {
+    for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
+      if (attempt > 0) {
+        await sleep(RETRY_DELAYS_MS[attempt - 1]);
+      }
 
-    try {
-      const result = await callGemini(systemPrompt, userPrompt);
-      responseCache.set(cacheKey, {
-        result,
-        expires: Date.now() + CACHE_TTL_MS,
-      });
-      return result;
-    } catch (e) {
-      lastError = e instanceof Error ? e : new Error("AI request failed");
-      const isRateLimit = lastError.message.includes("RATE_LIMIT");
-      if (!isRateLimit || attempt === RETRY_DELAYS_MS.length) {
-        throw new Error(formatErrorForUser(lastError.message));
+      try {
+        return await callGemini(model, systemPrompt, userPrompt);
+      } catch (e) {
+        lastError = e instanceof Error ? e : new Error("AI request failed");
+        const isRateLimit = isRateLimitError(lastError.message);
+        if (!isRateLimit) break; // try next model on non-rate-limit errors
       }
     }
   }
 
-  throw new Error(formatErrorForUser(lastError?.message ?? "AI request failed"));
+  throw lastError ?? new Error("AI request failed");
 }
 
 async function callGemini(
+  model: string,
   systemPrompt: string,
   userPrompt: string
 ): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
   const response = await fetch(url, {
     method: "POST",
@@ -102,13 +153,13 @@ function parseGeminiError(status: number, body: string): string {
     const errorStatus = parsed.error?.status;
 
     if (status === 429 || errorStatus === "RESOURCE_EXHAUSTED") {
-      return "RATE_LIMIT:Gemini free tier limit hit";
+      return "RATE_LIMIT:Gemini quota exhausted";
     }
     if (status === 403 || errorStatus === "PERMISSION_DENIED") {
-      return "Invalid Gemini API key. Get a free key at aistudio.google.com/apikey";
+      return "Invalid Gemini API key";
     }
     if (status === 400 && message?.includes("API key")) {
-      return "Invalid Gemini API key. Check GEMINI_API_KEY in Vercel.";
+      return "Invalid Gemini API key";
     }
     if (message) return message;
   } catch {
@@ -118,8 +169,8 @@ function parseGeminiError(status: number, body: string): string {
 }
 
 function formatErrorForUser(message: string): string {
-  if (message.includes("RATE_LIMIT")) {
-    return "Gemini free tier limit reached. Wait 30–60 seconds between requests, or try the same query again (cached results return instantly).";
+  if (isRateLimitError(message)) {
+    return "AI is temporarily busy. Instant analysis was used instead.";
   }
   return message.replace(/^RATE_LIMIT:/, "");
 }
@@ -130,4 +181,12 @@ function hashPrompt(system: string, user: string): string {
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Legacy export for any direct usage
+export async function generateAiResponse(
+  systemPrompt: string,
+  userPrompt: string
+): Promise<string> {
+  return generateAiResponseRaw(systemPrompt, userPrompt);
 }

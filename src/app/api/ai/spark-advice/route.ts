@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { generateAiResponse, isAiConfigured } from "@/lib/ai/client";
+import { generateWithFallback } from "@/lib/ai/client";
+import { sparkAdviceOffline } from "@/lib/ai/fallbacks/spark";
 
 export async function POST(request: Request) {
   try {
@@ -14,16 +15,6 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Config and results are required" },
         { status: 400 }
-      );
-    }
-
-    if (!isAiConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "AI is not configured. Add a free GEMINI_API_KEY from aistudio.google.com/apikey to Vercel environment variables.",
-        },
-        { status: 503 }
       );
     }
 
@@ -48,9 +39,13 @@ ${(body.warnings ?? []).join("\n") || "None"}
 
 Provide tuning recommendations and explain why.`;
 
-    const advice = await generateAiResponse(systemPrompt, userPrompt);
+    const { text, source } = await generateWithFallback(
+      systemPrompt,
+      userPrompt,
+      () => sparkAdviceOffline(body.config!, body.results!)
+    );
 
-    return NextResponse.json({ advice });
+    return NextResponse.json({ advice: text, source });
   } catch (e) {
     const message =
       e instanceof Error ? e.message : "Failed to generate advice";

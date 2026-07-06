@@ -75,7 +75,7 @@ export function SparkErrorExplainerTool() {
 
       <AiResultPanel
         title="AI Spark Error Explainer"
-        description="Get root cause analysis, step-by-step fixes, prevention tips, and relevant Spark configuration keys."
+        description="Root cause, fixes, and Spark config keys. Works instantly — AI-enhanced when available."
         buttonLabel="Explain Spark Error"
         disabled={!errorLog.trim()}
         onGenerate={async () => {
@@ -86,10 +86,11 @@ export function SparkErrorExplainerTool() {
           });
           const data = (await res.json()) as {
             explanation?: string;
+            source?: "ai" | "instant";
             error?: string;
           };
           if (!res.ok) throw new Error(data.error ?? "Request failed");
-          return data.explanation ?? "";
+          return { text: data.explanation ?? "", source: data.source };
         }}
       />
 

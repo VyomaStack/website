@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { generateAiResponse, isAiConfigured } from "@/lib/ai/client";
+import { generateWithFallback } from "@/lib/ai/client";
+import { generateFromJsonOffline } from "@/lib/ai/fallbacks/json-generate";
 
 const GENERATORS = {
   "java-pojo": {
@@ -53,24 +54,17 @@ export async function POST(request: Request) {
 
     JSON.parse(json);
 
-    if (!isAiConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "AI is not configured. Add a free GEMINI_API_KEY from aistudio.google.com/apikey to Vercel environment variables.",
-        },
-        { status: 503 }
-      );
-    }
-
     const generator = GENERATORS[type];
     const rootName = className?.trim() || "RootModel";
-    const result = await generateAiResponse(
+    const trimmed = json.trim();
+
+    const { text, source } = await generateWithFallback(
       generator.system,
-      generator.user(json.trim(), rootName)
+      generator.user(trimmed, rootName),
+      () => generateFromJsonOffline(trimmed, type, rootName)
     );
 
-    return NextResponse.json({ result });
+    return NextResponse.json({ result: text, source });
   } catch (e) {
     if (e instanceof SyntaxError) {
       return NextResponse.json({ error: "Invalid JSON input" }, { status: 400 });

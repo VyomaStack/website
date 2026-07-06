@@ -222,7 +222,7 @@ export function JsonFormatterTool() {
 
       <AiCodePanel
         title="AI JSON Studio"
-        description="Generate Java POJOs, TypeScript interfaces, OpenAPI schemas, or SQL tables from your JSON."
+        description="Generate Java POJOs, TypeScript interfaces, OpenAPI schemas, or SQL tables. Works instantly — AI-enhanced when available."
         generateLabel="Generate"
         disabled={!input.trim()}
         classNameField
@@ -243,9 +243,13 @@ export function JsonFormatterTool() {
               className,
             }),
           });
-          const data = (await res.json()) as { result?: string; error?: string };
+          const data = (await res.json()) as {
+            result?: string;
+            source?: "ai" | "instant";
+            error?: string;
+          };
           if (!res.ok) throw new Error(data.error ?? "Request failed");
-          return data.result ?? "";
+          return { text: data.result ?? "", source: data.source };
         }}
       />
     </div>

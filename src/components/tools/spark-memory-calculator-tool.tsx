@@ -203,7 +203,7 @@ export function SparkMemoryCalculatorTool() {
 
       <AiResultPanel
         title="AI Spark Tuning Advisor"
-        description="Get expert recommendations on executor sizing, memory tuning, and cost optimization based on your configuration."
+        description="Executor sizing and memory tuning recommendations. Works instantly — AI-enhanced when available."
         buttonLabel="Get AI Recommendations"
         onGenerate={async () => {
           const res = await fetch("/api/ai/spark-advice", {
@@ -224,10 +224,11 @@ export function SparkMemoryCalculatorTool() {
           });
           const data = (await res.json()) as {
             advice?: string;
+            source?: "ai" | "instant";
             error?: string;
           };
           if (!res.ok) throw new Error(data.error ?? "Request failed");
-          return data.advice ?? "";
+          return { text: data.advice ?? "", source: data.source };
         }}
       />
 
