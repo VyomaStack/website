@@ -212,6 +212,241 @@ Manual POJOs for a 20-field nested response can take 30+ minutes. AI JSON Studio
 
 No signup. Format, validate, and generate — all in one workspace.`,
   },
+  {
+    slug: "decode-jwt-online-free",
+    title: "How to Decode JWT Tokens Online (Safely)",
+    description:
+      "Decode JSON Web Token headers and payloads in your browser. Inspect claims, expiration, and algorithms — free JWT decoder with no signup.",
+    publishedAt: "2026-07-08",
+    readTime: "4 min",
+    toolHref: "/tools/jwt-decoder",
+    toolLabel: "Decode JWT Now",
+    keywords: ["jwt decoder", "decode jwt", "jwt debugger", "inspect jwt"],
+    content: `JWTs (JSON Web Tokens) show up everywhere in modern apps — OAuth logins, API gateways, microservices, and session cookies. When auth breaks at 2 AM, you need to read the token fast.
+
+## What is a JWT?
+
+A JWT has three Base64URL-encoded parts separated by dots:
+
+\`\`\`
+header.payload.signature
+\`\`\`
+
+- **Header** — algorithm (\`alg\`) and token type (\`typ\`)
+- **Payload** — claims like \`sub\`, \`exp\`, \`iat\`, \`roles\`
+- **Signature** — proves the token wasn't tampered with (requires the secret key)
+
+Decoding shows header and payload. **Verifying** the signature needs your server's secret — online decoders don't do that.
+
+## When to decode a JWT
+
+- Debug **401 Unauthorized** or **403 Forbidden** responses
+- Check if \`exp\` (expiration) has passed
+- Inspect \`iss\` (issuer) and \`aud\` (audience) mismatches
+- Verify roles/scopes in the payload match what your API expects
+- Compare a token from staging vs production
+
+## Decode JWT in your browser (free)
+
+The [VyomaStack JWT Decoder](/tools/jwt-decoder) runs **100% in your browser** — nothing is sent to a server.
+
+1. Paste your JWT into the input field
+2. See decoded **header** and **payload** as formatted JSON
+3. Check expiration, issued-at, and custom claims at a glance
+
+## Common JWT claims
+
+| Claim | Meaning |
+|-------|---------|
+| \`sub\` | Subject (user ID) |
+| \`exp\` | Expiration time (Unix timestamp) |
+| \`iat\` | Issued at |
+| \`iss\` | Issuer |
+| \`aud\` | Audience |
+| \`roles\` / \`scope\` | Permissions |
+
+## Security rules
+
+- **Never paste production tokens** with sensitive PII into untrusted sites
+- VyomaStack processes locally — still redact tokens in screenshots and bug reports
+- Decoding ≠ verifying — a forged payload decodes fine; only signature verification catches tampering
+- Rotate secrets if a token with elevated claims leaks
+
+## JWT decoder vs jwt.io
+
+Both decode locally. VyomaStack keeps JWT debugging alongside your other dev tools — SQL, JSON, regex, cron — in one workspace with no account.
+
+## Related tools
+
+- [Base64 Encoder](/tools/base64-encoder) — JWT parts are Base64URL-encoded
+- [Hash Generator](/tools/hash-generator) — checksum API keys and secrets
+
+## Try it now
+
+Paste a JWT and inspect claims in seconds — no login required.`,
+  },
+  {
+    slug: "cron-expression-generator-guide",
+    title: "Cron Expression Generator — Build Schedules Online",
+    description:
+      "Learn cron syntax and build expressions with presets. Human-readable descriptions and next run times for Linux, Kubernetes, GitHub Actions, and Spring.",
+    publishedAt: "2026-07-08",
+    readTime: "5 min",
+    toolHref: "/tools/cron-generator",
+    toolLabel: "Open Cron Generator",
+    keywords: [
+      "cron generator",
+      "cron expression",
+      "crontab generator",
+      "cron schedule",
+    ],
+    content: `Cron expressions schedule recurring jobs — backups, ETL pipelines, report generation, cache warming. The syntax is compact but easy to get wrong. One wrong field and your job runs every minute instead of once a day.
+
+## Cron field order (Unix 5-field)
+
+\`\`\`
+* * * * *
+│ │ │ │ │
+│ │ │ │ └── day of week (0-6, Sun=0)
+│ │ │ └──── month (1-12)
+│ │ └────── day of month (1-31)
+│ └──────── hour (0-23)
+└────────── minute (0-59)
+\`\`\`
+
+## Common cron examples
+
+| Expression | Meaning |
+|------------|---------|
+| \`0 9 * * 1-5\` | Weekdays at 9:00 AM |
+| \`0 */6 * * *\` | Every 6 hours |
+| \`30 2 * * *\` | Daily at 2:30 AM |
+| \`0 0 1 * *\` | First day of every month at midnight |
+| \`*/15 * * * *\` | Every 15 minutes |
+
+## Where cron expressions are used
+
+- **Linux crontab** — \`crontab -e\`
+- **Kubernetes CronJob** — \`spec.schedule\`
+- **GitHub Actions** — \`on.schedule\`
+- **AWS EventBridge** — rate and cron rules
+- **Spring Boot** — \`@Scheduled(cron = "0 0 9 * * MON-FRI")\`
+- **Quartz scheduler** — enterprise job scheduling
+
+Note: some systems use 6 fields (seconds first) or different day-of-week conventions. Always check your platform's docs.
+
+## Build cron expressions visually
+
+The [VyomaStack Cron Generator](/tools/cron-generator) helps you:
+
+1. Pick a **preset** (every hour, weekdays at 9 AM, etc.)
+2. Or build field-by-field with the visual editor
+3. See a **human-readable description** of what the expression does
+4. Preview the **next 5 run times** in your local timezone
+
+All processing runs in your browser.
+
+## Cron debugging tips
+
+- Test in staging before deploying a new schedule
+- Watch for timezone mismatches — crontab uses server time; Spring can use a zone
+- \`*/1\` in the wrong field runs far more often than you expect
+- Use monitoring alerts on job duration and failure rate
+
+## Cron vs interval schedulers
+
+| Cron | Fixed interval (e.g. every 30m) |
+|------|----------------------------------|
+| Wall-clock times (9 AM daily) | Relative timing from last run |
+| Calendar-aware (1st of month) | Simpler mental model |
+| Harder to read | Easier for "every N minutes" |
+
+## Related tools
+
+- [Regex Tester](/tools/regex-tester) — validate log patterns from scheduled jobs
+- [Spark Memory Calculator](/tools/spark-memory-calculator) — size nightly ETL jobs
+
+## Try it free
+
+Build and validate cron expressions — no account required.`,
+  },
+  {
+    slug: "regex-tester-online-guide",
+    title: "Regex Tester Online — Debug Regular Expressions Fast",
+    description:
+      "Test regular expressions with flags and capture groups. Highlighted matches for JavaScript, Python, and Java patterns. Free browser-based regex debugger.",
+    publishedAt: "2026-07-08",
+    readTime: "5 min",
+    toolHref: "/tools/regex-tester",
+    toolLabel: "Test Regex Now",
+    keywords: [
+      "regex tester",
+      "regular expression tester",
+      "test regex online",
+      "regex debugger",
+    ],
+    content: `Regular expressions are powerful and easy to get wrong. A greedy quantifier, a missing anchor, or the wrong flag can silently match the wrong text — or nothing at all.
+
+## When you need a regex tester
+
+- Validate log parsing patterns before shipping to production
+- Debug **grep**, **sed**, and **awk** one-liners
+- Test API input validation rules
+- Extract fields from unstructured text (emails, URLs, IDs)
+- Refactor legacy patterns without breaking capture groups
+
+## How the VyomaStack Regex Tester works
+
+The [Regex Tester](/tools/regex-tester) runs entirely in your browser:
+
+1. Enter your **regular expression** in the pattern field
+2. Paste **sample text** to test against
+3. Toggle **flags** (global, case-insensitive, multiline, dotall)
+4. See **highlighted matches** and **capture groups** instantly
+
+No server round-trip. Your test data stays on your device.
+
+## Essential regex flags
+
+| Flag | Effect |
+|------|--------|
+| \`g\` | Global — find all matches, not just the first |
+| \`i\` | Case-insensitive |
+| \`m\` | Multiline — \`^\` and \`$\` match line boundaries |
+| \`s\` | Dotall — \`.\` matches newlines |
+
+## Common patterns (starting points)
+
+\`\`\`
+Email (simple):     [\\w.-]+@[\\w.-]+\\.\\w+
+URL:                https?://[\\w.-]+(?:/[\\w./?%&=-]*)?
+IPv4:               \\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b
+Date (YYYY-MM-DD):  \\d{4}-\\d{2}-\\d{2}
+UUID:               [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
+\`\`\`
+
+Always tailor patterns to your exact validation needs — these are templates, not production-ready validators.
+
+## Regex pitfalls
+
+- **Catastrophic backtracking** — nested quantifiers like \`(a+)+\` on long input can hang
+- **Greedy vs lazy** — \`.*\` eats everything; \`.*?\` stops at the first match
+- **Anchors** — \`^\` and \`$\` prevent partial matches when you need full-string validation
+- **Engine differences** — Java, Python, and JavaScript differ on lookbehind and Unicode classes
+
+## Regex tester vs regex101
+
+regex101 is excellent for deep debugging. VyomaStack gives you a fast, integrated tester alongside SQL, JSON, JWT, and cron tools — one workspace, no tabs, no login.
+
+## Related tools
+
+- [Log Analyzer](/tools/log-analyzer) — paste error logs that your regex should parse
+- [URL Encoder](/tools/url-encoder) — encode patterns for query strings
+
+## Try it now
+
+Test your regex pattern in seconds — free, browser-secure, no signup.`,
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
