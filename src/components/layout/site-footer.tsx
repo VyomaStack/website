@@ -57,6 +57,22 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link
+                href="/privacy"
+                className="transition-colors hover:text-primary"
+              >
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/terms"
+                className="transition-colors hover:text-primary"
+              >
+                Terms of Service
+              </Link>
+            </li>
+            <li>
               <span className="text-muted-foreground/70">Blog — coming soon</span>
             </li>
           </ul>
@@ -64,7 +80,23 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-border px-6 py-6 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} VyomaStack. All rights reserved.
+        <p>© {new Date().getFullYear()} VyomaStack. All rights reserved.</p>
+        <p className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <Link href="/privacy" className="transition-colors hover:text-primary">
+            Privacy
+          </Link>
+          <Link href="/terms" className="transition-colors hover:text-primary">
+            Terms
+          </Link>
+          <a
+            href="https://github.com/VyomaStack/website"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-primary"
+          >
+            GitHub
+          </a>
+        </p>
       </div>
     </footer>
   );
