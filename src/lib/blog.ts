@@ -689,6 +689,251 @@ The browser tool is faster for quick checks while debugging — especially when 
 
 Compute MD5, SHA-1, SHA-256, SHA-384, and SHA-512 instantly — browser-secure, no login.`,
   },
+  {
+    slug: "url-encode-decode-online",
+    title: "URL Encoder and Decoder Online — Free Guide",
+    description:
+      "Encode and decode URLs with encodeURIComponent and encodeURI. Fix broken query strings and percent-encoding issues — free, browser-based.",
+    publishedAt: "2026-07-08",
+    readTime: "4 min",
+    toolHref: "/tools/url-encoder",
+    toolLabel: "Open URL Encoder",
+    keywords: [
+      "url encoder",
+      "url decoder",
+      "encodeURIComponent",
+      "percent encoding",
+    ],
+    content: `Broken URLs are a daily annoyance — spaces in query params, ampersands in values, Unicode in paths. Percent-encoding (URL encoding) fixes it, but \`encodeURI\` vs \`encodeURIComponent\` trips up even experienced developers.
+
+## What is URL encoding?
+
+URL encoding replaces unsafe characters with \`%\` followed by two hex digits. A space becomes \`%20\`, \`&\` becomes \`%26\`, and non-ASCII characters become UTF-8 byte sequences (e.g. \`é\` → \`%C3%A9\`).
+
+Without encoding, special characters break query parsing, routing, and API clients.
+
+## encodeURI vs encodeURIComponent
+
+| Function | Use for | Preserves |
+|----------|---------|-----------|
+| \`encodeURI\` | Full URLs | \`/\`, \`:\`, \`?\`, \`=\`, \`&\`, \`#\` |
+| \`encodeURIComponent\` | Query param **values** | Nothing except unreserved chars |
+
+**Rule of thumb:** encode individual parameter values with \`encodeURIComponent\`. Use \`encodeURI\` only when encoding a mostly-complete URL string.
+
+### Example
+
+\`\`\`
+Base URL:     https://api.example.com/search
+Query param:  q=hello world&lang=en
+
+Correct:      https://api.example.com/search?q=hello%20world&lang=en
+Wrong:        encodeURI("hello world") on just the value — use encodeURIComponent
+\`\`\`
+
+## Encode and decode in your browser
+
+The [VyomaStack URL Encoder](/tools/url-encoder) runs **100% locally**:
+
+1. Paste a URL or query string into the input
+2. Choose **encodeURIComponent** or **encodeURI** mode
+3. Click **Encode** or **Decode**
+4. Copy the result or swap input/output for chained fixes
+
+Nothing is sent to a server.
+
+## Common URL encoding bugs
+
+- **Double encoding** — \`%2520\` instead of \`%20\` when you encode already-encoded text
+- **Encoding the whole URL** with \`encodeURIComponent\` — breaks \`://\` and \`/\`
+- **Plus vs space** — HTML forms send spaces as \`+\`; \`decodeURIComponent\` handles both
+- **Unicode in paths** — modern browsers encode automatically; APIs may not
+
+## When you need a URL encoder
+
+- Debug REST API calls with special characters in filters
+- Fix broken redirect links from analytics or email tools
+- Decode log lines with percent-encoded request paths
+- Build query strings for curl or Postman by hand
+
+## URL encoder vs JavaScript one-liner
+
+\`\`\`javascript
+encodeURIComponent("hello world");  // "hello%20world"
+decodeURIComponent("hello%20world"); // "hello world"
+\`\`\`
+
+The browser tool is faster when you're already debugging JSON, SQL, or JWT in VyomaStack — copy button included, no DevTools console.
+
+## Related tools
+
+- [Base64 Encoder](/tools/base64-encoder) — different encoding for binary/text payloads
+- [JSON Formatter](/tools/json-formatter) — validate API bodies before URL-encoding fields
+- [QR Code Generator](/tools/qr-code-generator) — encode URLs into scannable codes
+
+## Try it free
+
+Encode and decode URLs instantly — no account, no server upload.`,
+  },
+  {
+    slug: "uuid-generator-v4-guide",
+    title: "UUID Generator — Create Random UUID v4 Online",
+    description:
+      "Generate cryptographically secure UUID v4 identifiers in your browser. Single or bulk UUIDs with one-click copy. Free GUID generator, no signup.",
+    publishedAt: "2026-07-08",
+    readTime: "4 min",
+    toolHref: "/tools/uuid-generator",
+    toolLabel: "Generate UUID",
+    keywords: [
+      "uuid generator",
+      "uuid v4",
+      "guid generator",
+      "generate uuid online",
+    ],
+    content: `UUIDs (Universally Unique Identifiers) are the standard way to assign IDs without a central coordinator. Database primary keys, API resource IDs, correlation IDs in logs, message queue keys — UUID v4 shows up everywhere.
+
+## What is a UUID v4?
+
+A UUID is 128 bits, usually shown as 36 characters:
+
+\`\`\`
+550e8400-e29b-41d4-a716-446655440000
+\`\`\`
+
+**Version 4** means the value is **random** (122 random bits). Collision probability is negligible for practical systems — you'd need billions of IDs before odds matter.
+
+Microsoft ecosystems call the same thing a **GUID** (Globally Unique Identifier).
+
+## When to use UUIDs
+
+- **Database primary keys** — avoid auto-increment leaks and shard-friendly IDs
+- **Distributed systems** — generate IDs on any node without coordination
+- **API resource identifiers** — \`/users/550e8400-e29b-41d4-a716-446655440000\`
+- **Log correlation** — trace a request across microservices
+- **Test data** — seed fixtures with realistic IDs
+
+## Generate UUIDs in your browser
+
+The [VyomaStack UUID Generator](/tools/uuid-generator) uses \`crypto.randomUUID()\` — cryptographically secure, same API Node.js 19+ and modern browsers expose.
+
+1. Click **Generate** for a single UUID
+2. Set **count** (1–100) for bulk generation
+3. **Copy** one UUID or **Copy All** as a list
+4. Nothing is sent to a server
+
+## UUID versions (quick reference)
+
+| Version | How it's made | Use case |
+|---------|---------------|----------|
+| v1 | Timestamp + MAC | Time-ordered, legacy |
+| v4 | Random | General purpose (default) |
+| v5 | SHA-1 of namespace + name | Deterministic from input |
+| v7 | Timestamp + random | Sortable, newer standard |
+
+For most apps today, **v4** is the right default. Use v7 if you need time-sortable IDs in new systems.
+
+## UUID vs auto-increment
+
+| UUID v4 | Auto-increment integer |
+|---------|------------------------|
+| Globally unique | Unique per table |
+| Opaque, non-guessable | Sequential, enumerable |
+| 16 bytes storage | 4–8 bytes storage |
+| No central generator | Requires DB sequence |
+
+UUIDs trade storage and index locality for independence and privacy.
+
+## Bulk UUID generation
+
+Need 50 test user IDs for a seed script? Set count to 50, generate, copy all. Faster than a loop in the terminal when you're not already in a REPL.
+
+## Related tools
+
+- [JWT Decoder](/tools/jwt-decoder) — \`jti\` claim is often a UUID
+- [Hash Generator](/tools/hash-generator) — fingerprint content (different from random IDs)
+- [Password Generator](/tools/password-generator) — secrets, not identifiers
+
+## Try it now
+
+Generate UUID v4 instantly — free, private, no signup.`,
+  },
+  {
+    slug: "qr-code-generator-free-guide",
+    title: "QR Code Generator — Create QR Codes Online Free",
+    description:
+      "Generate QR codes from URLs, text, and WiFi credentials. Download PNG or copy to clipboard. Free browser-based QR code maker with no signup.",
+    publishedAt: "2026-07-08",
+    readTime: "4 min",
+    toolHref: "/tools/qr-code-generator",
+    toolLabel: "Create QR Code",
+    keywords: [
+      "qr code generator",
+      "create qr code",
+      "qr code maker",
+      "url to qr code",
+    ],
+    content: `QR codes bridge physical and digital — conference badges, restaurant menus, product packaging, WiFi onboarding, and app download links. A good generator lets you create, preview, and download in seconds.
+
+## What can you encode?
+
+The [VyomaStack QR Code Generator](/tools/qr-code-generator) supports any text payload:
+
+- **URLs** — marketing links, app stores, documentation
+- **Plain text** — instructions, serial numbers, promo codes
+- **Email** — \`mailto:support@example.com\`
+- **Phone** — \`tel:+1234567890\`
+- **WiFi** — \`WIFI:T:WPA;S:NetworkName;P:password;;\`
+- **vCard** — contact details for business cards
+
+WiFi QR codes let guests connect without typing passwords — common at offices and events.
+
+## How to create a QR code
+
+1. Open the [QR Code Generator](/tools/qr-code-generator)
+2. Paste your URL or text into the input field
+3. Adjust **size** and **error correction** level if needed
+4. Preview updates live in your browser
+5. **Download PNG** or **copy** to clipboard
+
+All generation runs locally — your URLs and WiFi passwords never hit a server.
+
+## Error correction levels
+
+| Level | Recovery | Best for |
+|-------|----------|----------|
+| L (Low) | ~7% | Clean digital display |
+| M (Medium) | ~15% | General use (default) |
+| Q (Quartile) | ~25% | Print with possible damage |
+| H (High) | ~30% | Logos overlaid on QR, outdoor signage |
+
+Higher correction = denser QR code but survives scratches and partial covering.
+
+## QR code best practices
+
+- **Test before print** — scan with iOS Camera and Google Lens
+- **Short URLs** — use a redirect service for long links; simpler QR = easier scanning
+- **Contrast** — dark modules on light background; avoid inverted or low-contrast designs
+- **Quiet zone** — leave white margin around the code (most tools include this automatically)
+- **Size** — outdoor signage needs larger codes; business cards can be smaller
+
+## QR generator vs paid tools
+
+Paid tools add analytics, dynamic redirects, and brand templates. VyomaStack is ideal when you need:
+
+- A **static QR** for a slide deck, README, or handout
+- A **WiFi QR** for your home lab or demo booth
+- A quick code **without** creating an account
+
+## Related tools
+
+- [URL Encoder](/tools/url-encoder) — fix query strings before encoding long URLs
+- [Password Generator](/tools/password-generator) — strong WiFi passwords to embed in WiFi QR
+- [UUID Generator](/tools/uuid-generator) — unique IDs for asset tags paired with QR labels
+
+## Try it free
+
+Create and download a QR code in seconds — no login, runs in your browser.`,
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
