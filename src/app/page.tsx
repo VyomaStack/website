@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles, Shield, Brain, Flame } from "lucide-react";
+import { ArrowRight, Search, Sparkles } from "lucide-react";
 
+import { ProductShowcase } from "@/components/marketing/product-screenshots";
+import { TrustStats } from "@/components/marketing/trust-stats";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,47 +12,27 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { LIVE_TOOL_SLUGS } from "@/lib/live-tools";
+import { AI_TOOL_COUNT } from "@/lib/site-stats";
 import { categories, tools } from "@/lib/tools";
-
-const features = [
-  {
-    icon: Brain,
-    title: "AI-Powered Workflows",
-    description:
-      "Format, explain, optimize, and fix — not just static utilities.",
-  },
-  {
-    icon: Flame,
-    title: "Spark & Data Engineering",
-    description:
-      "Memory calculators, config tuning, and AI advisors built for real pipelines.",
-  },
-  {
-    icon: Shield,
-    title: "Free Tools + Smart AI",
-    description:
-      "Browser-based formatters are free. AI explain and optimize when you need more.",
-  },
-];
 
 const aiHighlights = [
   {
     title: "AI SQL Assistant",
-    description: "Format SQL, then get AI explanations, performance notes, and improvements.",
+    description:
+      "Format SQL, then get AI explanations, performance notes, and improvements.",
     href: "/tools/sql-formatter",
-    badge: "Live",
   },
   {
     title: "AI JSON Studio",
-    description: "Format JSON, generate Java POJOs, TypeScript interfaces, and OpenAPI schemas.",
+    description:
+      "Format JSON, generate Java POJOs, TypeScript interfaces, and OpenAPI schemas.",
     href: "/tools/json-formatter",
-    badge: "Live",
   },
   {
     title: "Spark AI Tools",
-    description: "Memory calculator with AI tuning and AI error explainer for stack traces.",
+    description:
+      "Memory calculator with AI tuning and AI error explainer for stack traces.",
     href: "/tools/spark-error-explainer",
-    badge: "Live",
   },
 ];
 
@@ -59,75 +41,80 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero — brand-first */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/15 via-background to-background" />
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-24 text-center sm:py-32">
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-20 text-center sm:py-28">
           <span className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
             <Sparkles className="mr-1.5 inline size-3.5" />
-            AI Workspace for Software Engineers
+            VyomaStack
           </span>
-          <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-6xl">
-            Format. Explain.
+          <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            The AI Workspace
             <br />
-            <span className="text-primary">Fix. Generate.</span>
+            <span className="text-primary">for Software Engineers</span>
           </h1>
           <p className="max-w-2xl text-lg text-muted-foreground">
-            The AI workspace for SQL, Spark, Java, and data engineering.
-            Free browser tools bring you in — AI workflows make you stay.
+            Format. Explain. Fix. Generate. — AI-powered workflows for SQL,
+            Spark, JSON, and data engineering. Not just tools — an intelligent
+            workspace that thinks with you.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/tools/sql-formatter">
               <Button size="lg">
-                Try AI SQL Assistant
+                Open AI Workspace
                 <ArrowRight className="size-4" />
               </Button>
             </Link>
-            <Link href="/tools/spark-memory-calculator">
+            <Link href="#showcase">
               <Button variant="outline" size="lg">
-                Spark Memory Calculator
+                See it in action
               </Button>
             </Link>
           </div>
 
-          <div className="relative mt-4 w-full max-w-xl">
+          <p className="text-sm text-muted-foreground">
+            {AI_TOOL_COUNT} AI workflows · {LIVE_TOOL_SLUGS.length} live tools ·
+            no login required
+          </p>
+
+          <div className="relative mt-2 w-full max-w-xl">
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search tools — SQL, Spark, JSON, Regex, Cron..."
+              placeholder="Search the workspace — SQL, Spark, JSON, Regex..."
               className="h-11 pl-10"
             />
           </div>
         </div>
       </section>
 
+      <TrustStats />
+
+      <div id="showcase">
+        <ProductShowcase />
+      </div>
+
       {/* AI Highlights */}
       <section className="mx-auto max-w-6xl px-6 py-16">
         <h2 className="text-2xl font-semibold tracking-tight">
-          AI-Powered Workflows
+          AI workflows, not just utilities
         </h2>
-        <p className="mt-1 text-muted-foreground">
-          More than formatters — real engineering assistance.
+        <p className="mt-1 max-w-2xl text-muted-foreground">
+          Every AI tool follows the same path: paste your input, get analysis and
+          suggestions, export the result. Built for how engineers actually work.
         </p>
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           {aiHighlights.map((item) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              className={item.badge === "Coming soon" ? "pointer-events-none" : ""}
-            >
-              <Card
-                className={`h-full transition-all ${item.badge === "Live" ? "hover:ring-primary/40" : "opacity-70"}`}
-              >
+            <Link key={item.title} href={item.href}>
+              <Card className="h-full transition-all hover:ring-primary/40">
                 <CardHeader>
-                  <span className="text-xs font-medium text-primary">
-                    {item.badge}
+                  <span className="inline-flex w-fit items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                    <Sparkles className="size-3" />
+                    AI Workflow
                   </span>
-                  <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="size-4 text-primary" />
-                    {item.title}
-                  </CardTitle>
+                  <CardTitle className="mt-2">{item.title}</CardTitle>
                   <CardDescription>{item.description}</CardDescription>
                 </CardHeader>
               </Card>
@@ -136,30 +123,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="mx-auto max-w-6xl px-6 py-8">
-        <div className="grid gap-6 sm:grid-cols-3">
-          {features.map((f) => (
-            <Card key={f.title} size="sm">
-              <CardHeader>
-                <f.icon className="mb-1 size-5 text-primary" />
-                <CardTitle>{f.title}</CardTitle>
-                <CardDescription>{f.description}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Popular Tools */}
+      {/* All Tools */}
       <section id="tools" className="mx-auto max-w-6xl px-6 py-12">
-        <h2 className="text-2xl font-semibold tracking-tight">All Tools</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">
+          The workspace toolkit
+        </h2>
         <p className="mt-1 text-muted-foreground">
-          Free utilities + AI enhancements. More launching every week.
+          Browser-secure utilities with AI where it matters. More launching
+          every week.
         </p>
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => {
             const isLive = liveSlugs.has(tool.slug);
+            const isAi =
+              tool.slug === "sql-formatter" ||
+              tool.slug === "json-formatter" ||
+              tool.slug === "spark-memory-calculator" ||
+              tool.slug === "spark-error-explainer";
+
             const content = (
               <Card
                 className={
@@ -169,9 +150,17 @@ export default function Home() {
                 }
               >
                 <CardHeader>
-                  <span className="text-xs font-medium text-primary">
-                    {tool.category}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium text-primary">
+                      {tool.category}
+                    </span>
+                    {isAi && isLive && (
+                      <span className="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+                        <Sparkles className="size-2.5" />
+                        AI
+                      </span>
+                    )}
+                  </div>
                   <CardTitle>{tool.name}</CardTitle>
                   <CardDescription>{tool.description}</CardDescription>
                   {!isLive && (
@@ -212,14 +201,16 @@ export default function Home() {
       {/* CTA */}
       <section className="border-t border-border bg-muted/20 px-6 py-16">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-semibold">Built for engineers like you</h2>
+          <h2 className="text-2xl font-semibold sm:text-3xl">
+            Your AI workspace is ready
+          </h2>
           <p className="mt-2 text-muted-foreground">
-            Spark, SQL, Java, Spring Boot, data pipelines — AI-assisted
-            workflows around real enterprise problems.
+            SQL, Spark, JSON, Java, Spring Boot, data pipelines — start with
+            any workflow. No account. No friction.
           </p>
           <Link href="/tools/sql-formatter" className="mt-6 inline-block">
             <Button size="lg">
-              Start with AI SQL Assistant
+              Enter the AI Workspace
               <ArrowRight className="size-4" />
             </Button>
           </Link>

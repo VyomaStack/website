@@ -12,12 +12,18 @@ export function SiteHeader() {
           className="flex items-center gap-2 font-semibold tracking-tight"
         >
           <Layers className="size-5 text-primary" />
-          <span>VyomaStack</span>
+          <span className="hidden sm:inline">VyomaStack</span>
+          <span className="hidden text-xs font-normal text-muted-foreground md:inline">
+            AI Workspace
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
+          <Link href="/#showcase" className="transition-colors hover:text-foreground">
+            Showcase
+          </Link>
           <Link href="/#tools" className="transition-colors hover:text-foreground">
-            Tools
+            Workspace
           </Link>
           <Link
             href="/tools/sql-formatter"

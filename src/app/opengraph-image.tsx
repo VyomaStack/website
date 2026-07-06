@@ -49,18 +49,11 @@ export default function OpenGraphImage() {
             VyomaStack
           </span>
         </div>
-        <p style={{ fontSize: 32, color: "#94a3b8", margin: 0 }}>
-          AI Workspace for Software Engineers
+        <p style={{ fontSize: 36, color: "#60a5fa", margin: 0, fontWeight: 700 }}>
+          The AI Workspace
         </p>
-        <p
-          style={{
-            fontSize: 24,
-            color: "#60a5fa",
-            marginTop: 16,
-            fontWeight: 600,
-          }}
-        >
-          Format · Explain · Fix · Generate
+        <p style={{ fontSize: 28, color: "#94a3b8", marginTop: 8 }}>
+          for Software Engineers
         </p>
         <div
           style={{

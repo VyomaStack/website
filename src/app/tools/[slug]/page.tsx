@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { FaqJsonLd, WebAppJsonLd } from "@/components/seo/json-ld";
+import { AiWorkflow } from "@/components/marketing/ai-workflow";
 import { isLiveTool, LIVE_TOOL_SLUGS, TOOL_COMPONENTS } from "@/lib/live-tools";
+import { getToolWorkflow } from "@/lib/tool-workflows";
 import { getTool, SITE_URL, tools } from "@/lib/tools";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -44,6 +46,7 @@ export default async function ToolPage({ params }: Props) {
 
   const ToolComponent = TOOL_COMPONENTS[slug];
   const pageUrl = `${SITE_URL}/tools/${slug}`;
+  const { steps, hasAi } = getToolWorkflow(slug);
 
   return (
     <>
@@ -81,6 +84,12 @@ export default async function ToolPage({ params }: Props) {
             {tool.description}
           </p>
         </div>
+
+        <AiWorkflow
+          steps={steps}
+          hasAi={hasAi}
+          title={hasAi ? "AI workflow" : "Tool workflow"}
+        />
 
         <ToolComponent />
 

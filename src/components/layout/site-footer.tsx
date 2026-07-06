@@ -14,8 +14,8 @@ export function SiteFooter() {
         <div>
           <p className="font-semibold">VyomaStack</p>
           <p className="mt-2 text-sm text-muted-foreground">
-            The GitHub of Developer Tools. AI-powered utilities for modern
-            developers.
+            The AI Workspace for Software Engineers. Format, explain, fix, and
+            generate — with browser-secure tools and AI-powered workflows.
           </p>
         </div>
 
