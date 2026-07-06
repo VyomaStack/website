@@ -73,7 +73,12 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <span className="text-muted-foreground/70">Blog — coming soon</span>
+              <Link
+                href="/blog"
+                className="transition-colors hover:text-primary"
+              >
+                Blog
+              </Link>
             </li>
           </ul>
         </div>

@@ -46,6 +46,7 @@ const AI_TOOL_SLUGS = new Set([
   "json-formatter",
   "spark-memory-calculator",
   "spark-error-explainer",
+  "log-analyzer",
 ]);
 
 const WORKFLOW_OVERRIDES: Record<string, WorkflowStep[]> = {
@@ -66,6 +67,12 @@ const WORKFLOW_OVERRIDES: Record<string, WorkflowStep[]> = {
     { title: "Calculate", description: "See overhead, unified memory, and totals" },
     { title: "AI Advisor", description: "Get tuning recommendations for your workload" },
     { title: "Export", description: "Copy config values for spark-submit" },
+  ],
+  "log-analyzer": [
+    { title: "Input", description: "Paste Spark, Spring, or application logs" },
+    { title: "Detect", description: "Auto-detect log type or choose mode manually" },
+    { title: "AI Analysis", description: "Root cause, key errors, and failure pattern" },
+    { title: "Export", description: "Copy fixes and prevention steps to your runbook" },
   ],
   "spark-error-explainer": [
     { title: "Input", description: "Paste OOM errors, stack traces, or stage failures" },

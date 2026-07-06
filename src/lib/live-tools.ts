@@ -4,6 +4,7 @@ import { Base64EncoderTool } from "@/components/tools/base64-encoder-tool";
 import { CronGeneratorTool } from "@/components/tools/cron-generator-tool";
 import { HashGeneratorTool } from "@/components/tools/hash-generator-tool";
 import { JsonFormatterTool } from "@/components/tools/json-formatter-tool";
+import { LogAnalyzerTool } from "@/components/tools/log-analyzer-tool";
 import { JwtDecoderTool } from "@/components/tools/jwt-decoder-tool";
 import { PasswordGeneratorTool } from "@/components/tools/password-generator-tool";
 import { QrCodeGeneratorTool } from "@/components/tools/qr-code-generator-tool";
@@ -26,6 +27,7 @@ export const LIVE_TOOL_SLUGS = [
   "qr-code-generator",
   "regex-tester",
   "cron-generator",
+  "log-analyzer",
   "spark-memory-calculator",
   "spark-error-explainer",
 ] as const;
@@ -44,6 +46,7 @@ export const TOOL_COMPONENTS: Record<LiveToolSlug, ComponentType> = {
   "qr-code-generator": QrCodeGeneratorTool,
   "regex-tester": RegexTesterTool,
   "cron-generator": CronGeneratorTool,
+  "log-analyzer": LogAnalyzerTool,
   "spark-memory-calculator": SparkMemoryCalculatorTool,
   "spark-error-explainer": SparkErrorExplainerTool,
 };

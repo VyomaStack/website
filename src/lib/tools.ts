@@ -571,6 +571,48 @@ export const tools: Tool[] = [
     ],
   },
   {
+    slug: "log-analyzer",
+    name: "AI Log Analyzer",
+    category: "AI",
+    h1: "Free AI Log Analyzer Online",
+    seoTitle: "AI Log Analyzer — Spark, Spring & App Logs | VyomaStack",
+    seoDescription:
+      "Free online log analyzer. Paste Spark, Java, Spring Boot, or application logs. Get root cause analysis, fixes, and prevention tips. Instant + AI-enhanced.",
+    description:
+      "Analyze Spark, Java/Spring, or generic application logs. Auto-detect log type, highlight errors, and get AI-powered root cause analysis.",
+    keywords: [
+      "log analyzer online",
+      "spring boot error log analyzer",
+      "spark log analyzer",
+      "stack trace analyzer",
+      "application log analyzer",
+      "error log explainer",
+    ],
+    relatedTools: ["spark-error-explainer", "spark-memory-calculator", "sql-formatter"],
+    faqs: [
+      {
+        question: "What log types are supported?",
+        answer:
+          "Apache Spark, Java/Spring Boot, and generic application logs. Auto-detect picks the best mode from your paste.",
+      },
+      {
+        question: "Is my log sent to a server?",
+        answer:
+          "For AI-enhanced analysis, log text is sent to our API. Instant analysis uses local pattern matching. Redact secrets before pasting.",
+      },
+      {
+        question: "How is this different from Spark Error Explainer?",
+        answer:
+          "Log Analyzer supports multiple log types (Spark, Spring, generic) with auto-detect. Spark Error Explainer is Spark-only.",
+      },
+      {
+        question: "Does it work without AI?",
+        answer:
+          "Yes. Instant analysis always returns structured root cause and fixes even when AI capacity is busy.",
+      },
+    ],
+  },
+  {
     slug: "spark-error-explainer",
     name: "Spark Error Explainer",
     category: "Spark",
@@ -588,7 +630,7 @@ export const tools: Tool[] = [
       "apache spark debugging",
       "spark executor lost",
     ],
-    relatedTools: ["spark-memory-calculator", "sql-formatter"],
+    relatedTools: ["log-analyzer", "spark-memory-calculator", "sql-formatter"],
     faqs: [
       {
         question: "What Spark errors can this analyze?",
