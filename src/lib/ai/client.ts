@@ -6,7 +6,7 @@ const GEMINI_API_KEY =
 const MODEL_CHAIN = (
   process.env.GEMINI_MODEL
     ? [process.env.GEMINI_MODEL]
-    : ["gemini-2.0-flash-lite", "gemini-2.0-flash", "gemini-1.5-flash"]
+    : ["gemini-2.0-flash-lite", "gemini-2.0-flash"]
 ) as string[];
 
 const RETRY_DELAYS_MS = [1500, 3000];
@@ -61,20 +61,9 @@ export async function generateWithFallback(
       expires: Date.now() + CACHE_TTL_MS,
     });
     return { text, source: "ai" };
-  } catch (e) {
-    const message = e instanceof Error ? e.message : "";
-    if (isRateLimitError(message) || message.includes("AI request failed")) {
-      return { text: fallback(), source: "instant" };
-    }
-    // Auth / config errors — still give users something useful
-    if (
-      message.includes("API key") ||
-      message.includes("PERMISSION_DENIED") ||
-      message.includes("AI_NOT_CONFIGURED")
-    ) {
-      return { text: fallback(), source: "instant" };
-    }
-    throw new Error(formatErrorForUser(message || "AI request failed"));
+  } catch {
+    // Any AI failure (rate limit, bad model, invalid key) → instant fallback
+    return { text: fallback(), source: "instant" };
   }
 }
 
