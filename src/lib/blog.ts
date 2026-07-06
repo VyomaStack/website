@@ -447,6 +447,248 @@ regex101 is excellent for deep debugging. VyomaStack gives you a fast, integrate
 
 Test your regex pattern in seconds — free, browser-secure, no signup.`,
   },
+  {
+    slug: "base64-encode-decode-online",
+    title: "Base64 Encode and Decode Online — Free Guide",
+    description:
+      "Encode and decode Base64 strings in your browser. UTF-8 support for text, JSON, and binary data. Free Base64 converter with no signup.",
+    publishedAt: "2026-07-08",
+    readTime: "4 min",
+    toolHref: "/tools/base64-encoder",
+    toolLabel: "Open Base64 Tool",
+    keywords: [
+      "base64 encoder",
+      "base64 decoder",
+      "base64 encode online",
+      "text to base64",
+    ],
+    content: `Base64 turns binary data into plain ASCII text. You'll see it in JWT tokens, email attachments, data URIs, API payloads, and config files. When you need to encode or decode fast, a browser tool beats writing a one-off script.
+
+## What is Base64?
+
+Base64 maps every 3 bytes of input to 4 printable characters using A–Z, a–z, 0–9, +, and /. Padding \`=\` is added when input length isn't a multiple of 3.
+
+Common uses:
+
+- Embedding small images in HTML/CSS (\`data:image/png;base64,...\`)
+- Encoding credentials in HTTP Basic Auth headers
+- Serializing binary blobs in JSON APIs
+- Decoding JWT header and payload segments (Base64URL variant)
+
+## Encode and decode in your browser
+
+The [VyomaStack Base64 Encoder](/tools/base64-encoder) runs **100% locally**:
+
+1. Paste text into the input field
+2. Click **Encode** to get Base64 output
+3. Paste Base64 into the input and click **Decode** to reverse it
+4. Use **Swap** to move output back to input for chained operations
+
+Full **UTF-8** support — emoji, CJK characters, and accented text encode correctly.
+
+## Base64 vs Base64URL
+
+| Standard Base64 | Base64URL (JWT, URLs) |
+|-----------------|----------------------|
+| Uses \`+\` and \`/\` | Uses \`-\` and \`_\` |
+| Padding \`=\` | Often strips padding |
+| Email, MIME | JSON Web Tokens, filenames |
+
+JWT decoding uses Base64URL. For standard Base64 text, use the encoder tool directly.
+
+## When developers reach for Base64
+
+- Quick-check an API response that returns encoded content
+- Decode a config value from Kubernetes secrets or CI variables
+- Encode a small JSON snippet for a query parameter (prefer proper URL encoding for full URLs)
+- Debug MIME multipart email bodies
+
+## Security notes
+
+- Base64 is **encoding**, not **encryption** — anyone can decode it
+- Never treat Base64 as a way to hide passwords or API keys
+- VyomaStack processes locally, but still avoid pasting production secrets into any online tool when possible
+
+## Base64 tool vs command line
+
+\`\`\`bash
+# macOS / Linux
+echo -n "hello" | base64
+echo "aGVsbG8=" | base64 -d
+\`\`\`
+
+The browser tool is faster for one-off debugging — no terminal, no flags, copy button included.
+
+## Related tools
+
+- [JWT Decoder](/tools/jwt-decoder) — tokens use Base64URL-encoded parts
+- [URL Encoder](/tools/url-encoder) — percent-encoding for query strings
+- [Hash Generator](/tools/hash-generator) — checksums and fingerprints
+
+## Try it free
+
+Encode and decode Base64 instantly — no account, no server upload.`,
+  },
+  {
+    slug: "strong-password-generator-guide",
+    title: "Strong Password Generator — Create Secure Passwords Online",
+    description:
+      "Generate cryptographically secure random passwords with custom length and character sets. Free browser-based password generator with strength indicator.",
+    publishedAt: "2026-07-08",
+    readTime: "4 min",
+    toolHref: "/tools/password-generator",
+    toolLabel: "Generate Password",
+    keywords: [
+      "password generator",
+      "strong password generator",
+      "random password generator",
+      "secure password",
+    ],
+    content: `Weak and reused passwords are still one of the top causes of breaches. A good password generator removes guesswork — cryptographically random, long enough to resist brute force, and unique per account.
+
+## What makes a strong password?
+
+- **Length** — 12+ characters; 16+ for high-value accounts
+- **Randomness** — not dictionary words, names, or keyboard patterns
+- **Character variety** — uppercase, lowercase, numbers, symbols
+- **Uniqueness** — never reuse across sites or services
+
+Password managers store what humans can't remember. Generate random, store safely, autofill everywhere.
+
+## Generate passwords in your browser
+
+The [VyomaStack Password Generator](/tools/password-generator) uses \`crypto.getRandomValues()\` — the same CSPRNG browsers use for TLS keys. **Nothing is sent to a server.**
+
+1. Set **length** (8–128 characters)
+2. Toggle character sets: uppercase, lowercase, numbers, symbols
+3. Enable **Exclude ambiguous** to omit \`0\`, \`O\`, \`1\`, \`l\`, \`I\`
+4. Click **Generate** — strength indicator updates live
+5. Generate **multiple passwords** at once with bulk mode
+
+## Password length vs crack time
+
+| Length | Character sets | Rough strength |
+|--------|----------------|----------------|
+| 8 | letters only | Weak |
+| 12 | mixed + symbols | Good |
+| 16 | mixed + symbols | Strong |
+| 20+ | mixed + symbols | Very strong |
+
+Length matters more than exotic symbols. A 20-character random passphrase beats an 8-character \`P@ssw0rd!\`.
+
+## Common mistakes
+
+- Using **memorable** passwords (pet names, birthdays) — predictable
+- **Rotating** passwords by adding \`1\` or \`!\` at the end — still weak
+- Sharing passwords over Slack or email — use a manager's secure share instead
+- Storing plaintext in a Notes app — use 1Password, Bitwarden, or similar
+
+## Password generator vs browser autofill
+
+Modern browsers suggest passwords too. VyomaStack is useful when you need:
+
+- Custom length for legacy systems with strict rules
+- Bulk passwords for test accounts or API keys
+- A password **without** saving it to browser storage
+- Copy-ready output with strength feedback
+
+## Related tools
+
+- [Hash Generator](/tools/hash-generator) — fingerprint API keys (not for password storage)
+- [UUID Generator](/tools/uuid-generator) — random identifiers for tokens and IDs
+
+## Try it now
+
+Generate a strong password in one click — free, private, no signup.`,
+  },
+  {
+    slug: "hash-generator-md5-sha256-guide",
+    title: "Hash Generator — MD5, SHA-256, SHA-512 Online",
+    description:
+      "Compute MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text in your browser. Free checksum and fingerprint tool with no signup.",
+    publishedAt: "2026-07-08",
+    readTime: "5 min",
+    toolHref: "/tools/hash-generator",
+    toolLabel: "Generate Hash",
+    keywords: [
+      "hash generator",
+      "sha256 generator",
+      "md5 hash",
+      "online hash calculator",
+      "checksum generator",
+    ],
+    content: `Hash functions turn any input into a fixed-size fingerprint. Developers use them for checksums, cache keys, file integrity, API signatures, and debugging — not for storing passwords (use bcrypt or Argon2 for that).
+
+## Supported algorithms
+
+The [VyomaStack Hash Generator](/tools/hash-generator) computes:
+
+| Algorithm | Output size | Common use |
+|-----------|-------------|------------|
+| MD5 | 128 bits | Legacy checksums, non-security etag |
+| SHA-1 | 160 bits | Git object IDs, legacy systems |
+| SHA-256 | 256 bits | Modern checksums, blockchain, TLS |
+| SHA-384 | 384 bits | High-security applications |
+| SHA-512 | 512 bits | File integrity, strong fingerprints |
+
+**SHA-256** and **SHA-512** are recommended for anything security-sensitive. MD5 and SHA-1 are fine for quick non-cryptographic checksums but are broken for collision resistance.
+
+## How to use it
+
+1. Paste or type text into the input field
+2. Select one or more algorithms
+3. Hashes **update as you type** — instant feedback
+4. Click **Copy** on any hash output
+
+All hashing runs in your browser via the Web Crypto API. Your input never leaves your device.
+
+## Real-world use cases
+
+- **Verify file downloads** — compare SHA-256 against the publisher's checksum
+- **Cache keys** — hash long query strings for Redis/Memcached keys
+- **API debugging** — reproduce HMAC or signature inputs step by step
+- **Database migrations** — fingerprint config blobs before and after changes
+- **Git-style object IDs** — SHA-1 of \`blob <size>\\0<content>\`
+
+## Hash vs encryption
+
+| Hash | Encryption |
+|------|------------|
+| One-way — cannot reverse | Two-way — decrypt with key |
+| Fixed output size | Output size ≈ input size |
+| Same input → same hash | Same input → different ciphertext (with IV) |
+| Checksums, fingerprints | Confidentiality |
+
+If you need to recover the original text, you need encryption — not hashing.
+
+## Never hash passwords with MD5/SHA
+
+Password storage requires slow, salted algorithms:
+
+- **bcrypt**, **scrypt**, **Argon2** — designed to resist brute force
+- Plain SHA-256 of a password is fast to crack with rainbow tables
+
+Use the hash generator for **data fingerprints**, not credential storage.
+
+## Hash generator vs command line
+
+\`\`\`bash
+echo -n "hello" | shasum -a 256
+echo -n "hello" | md5
+\`\`\`
+
+The browser tool is faster for quick checks while debugging — especially when you're already in VyomaStack for SQL, JSON, or JWT work.
+
+## Related tools
+
+- [Password Generator](/tools/password-generator) — random credentials (store in a manager)
+- [Base64 Encoder](/tools/base64-encoder) — encode binary before hashing in some pipelines
+- [JWT Decoder](/tools/jwt-decoder) — inspect signed token payloads
+
+## Try it free
+
+Compute MD5, SHA-1, SHA-256, SHA-384, and SHA-512 instantly — browser-secure, no login.`,
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
