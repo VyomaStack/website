@@ -66,7 +66,7 @@ export default async function ToolPage({ params }: Props) {
             Home
           </Link>
           <span className="mx-2">/</span>
-          <Link href="/#tools" className="transition-colors hover:text-primary">
+          <Link href="/tools" className="transition-colors hover:text-primary">
             Tools
           </Link>
           <span className="mx-2">/</span>

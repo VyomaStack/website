@@ -36,7 +36,7 @@ export function SiteFooter() {
             )}
             <li>
               <Link
-                href="/#tools"
+                href="/tools"
                 className="transition-colors hover:text-primary"
               >
                 All tools →
