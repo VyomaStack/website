@@ -571,6 +571,50 @@ export const tools: Tool[] = [
     ],
   },
   {
+    slug: "text-compare",
+    name: "Text Compare",
+    category: "Developer",
+    h1: "Free Text Compare & Diff Checker Online",
+    seoTitle: "Text Compare — Online Diff Checker | VyomaStack",
+    seoDescription:
+      "Free online text compare and diff tool. Side-by-side or unified diff with SQL and JSON formatting. Ignore whitespace and case. Runs in your browser — private and instant.",
+    description:
+      "Compare two texts with line-by-line diff. Format SQL or JSON before comparing. Side-by-side or unified view, ignore whitespace and case — all in your browser.",
+    keywords: [
+      "text compare",
+      "diff checker",
+      "compare text online",
+      "text diff",
+      "diff tool",
+      "compare two texts",
+      "sql diff",
+      "json diff",
+    ],
+    relatedTools: ["sql-formatter", "json-formatter", "regex-tester"],
+    faqs: [
+      {
+        question: "What is a text compare tool?",
+        answer:
+          "A text compare (diff) tool shows line-by-line differences between two blocks of text — added lines, removed lines, and unchanged lines — so you can spot changes quickly.",
+      },
+      {
+        question: "Can I compare SQL or JSON?",
+        answer:
+          "Yes. Use the Format SQL or Format JSON buttons on each side to beautify before diffing. Ideal for comparing queries, configs, and API payloads.",
+      },
+      {
+        question: "What does ignore whitespace do?",
+        answer:
+          "When enabled, leading and trailing spaces on each line are ignored during comparison. Useful when indentation differs but content is the same.",
+      },
+      {
+        question: "Is my text sent to a server?",
+        answer:
+          "No. All comparison runs entirely in your browser. Your data never leaves your device.",
+      },
+    ],
+  },
+  {
     slug: "log-analyzer",
     name: "AI Log Analyzer",
     category: "AI",

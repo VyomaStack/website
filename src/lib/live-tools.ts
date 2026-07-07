@@ -9,6 +9,7 @@ import { JwtDecoderTool } from "@/components/tools/jwt-decoder-tool";
 import { PasswordGeneratorTool } from "@/components/tools/password-generator-tool";
 import { QrCodeGeneratorTool } from "@/components/tools/qr-code-generator-tool";
 import { RegexTesterTool } from "@/components/tools/regex-tester-tool";
+import { TextCompareTool } from "@/components/tools/text-compare-tool";
 import { SparkErrorExplainerTool } from "@/components/tools/spark-error-explainer-tool";
 import { SparkMemoryCalculatorTool } from "@/components/tools/spark-memory-calculator-tool";
 import { SqlFormatterTool } from "@/components/tools/sql-formatter-tool";
@@ -27,6 +28,7 @@ export const LIVE_TOOL_SLUGS = [
   "qr-code-generator",
   "regex-tester",
   "cron-generator",
+  "text-compare",
   "log-analyzer",
   "spark-memory-calculator",
   "spark-error-explainer",
@@ -46,6 +48,7 @@ export const TOOL_COMPONENTS: Record<LiveToolSlug, ComponentType> = {
   "qr-code-generator": QrCodeGeneratorTool,
   "regex-tester": RegexTesterTool,
   "cron-generator": CronGeneratorTool,
+  "text-compare": TextCompareTool,
   "log-analyzer": LogAnalyzerTool,
   "spark-memory-calculator": SparkMemoryCalculatorTool,
   "spark-error-explainer": SparkErrorExplainerTool,

@@ -80,6 +80,12 @@ const WORKFLOW_OVERRIDES: Record<string, WorkflowStep[]> = {
     { title: "Suggestions", description: "Get fixes, prevention tips, and config keys" },
     { title: "Export", description: "Copy the action plan to your runbook" },
   ],
+  "text-compare": [
+    { title: "Input", description: "Paste original and modified text, SQL, or JSON" },
+    { title: "Format", description: "Beautify SQL or JSON on either side before diffing" },
+    { title: "Compare", description: "Line-by-line diff with added and removed highlights" },
+    { title: "Export", description: "Copy unified diff or review side-by-side" },
+  ],
 };
 
 export function getToolWorkflow(slug: string): {

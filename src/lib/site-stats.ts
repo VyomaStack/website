@@ -4,7 +4,7 @@
  */
 export const TRUST_STATS = [
   { value: "100,000+", label: "Queries Processed" },
-  { value: "14+", label: "Live Tools" },
+  { value: "15+", label: "Live Tools" },
   { value: "100%", label: "Browser Secure" },
   { value: "Free", label: "No Login Required" },
 ] as const;

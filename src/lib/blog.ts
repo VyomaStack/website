@@ -934,6 +934,73 @@ Paid tools add analytics, dynamic redirects, and brand templates. VyomaStack is 
 
 Create and download a QR code in seconds — no login, runs in your browser.`,
   },
+  {
+    slug: "text-compare-diff-online",
+    title: "Text Compare Online — Free Diff Checker",
+    description:
+      "Compare two texts with line-by-line diff. Format SQL or JSON first, ignore whitespace, and copy unified diff — free browser tool.",
+    publishedAt: "2026-07-08",
+    readTime: "4 min",
+    toolHref: "/tools/text-compare",
+    toolLabel: "Compare Text Now",
+    keywords: [
+      "text compare",
+      "diff checker",
+      "compare two texts",
+      "text diff online",
+    ],
+    content: `Need to see what changed between two configs, SQL queries, or JSON responses? A text compare tool highlights every added and removed line — faster than scrolling two files side by side.
+
+## When to use text compare
+
+- **Config drift** — staging vs production \`application.yml\`
+- **SQL refactors** — old query vs optimized version
+- **API changes** — JSON response before and after a deploy
+- **Code review** — paste two snippets from a PR
+- **Log diff** — error output before and after a fix
+
+## Compare text in your browser
+
+The [VyomaStack Text Compare](/tools/text-compare) tool runs **100% locally**:
+
+1. Paste **original** text in the left panel
+2. Paste **modified** text in the right panel
+3. See the diff update live — green for added, red for removed
+4. Switch between **side-by-side** and **unified** views
+5. Click **Copy diff** for a \`+/-\` unified patch
+
+## Format before you diff
+
+Messy formatting hides real changes. Use the per-side buttons:
+
+- **Format SQL** — beautify queries before comparing (pairs with [SQL Formatter](/tools/sql-formatter))
+- **Format JSON** — prettify API payloads before comparing (pairs with [JSON Formatter](/tools/json-formatter))
+
+Same logic, different indentation — no longer shows as a false diff.
+
+## Diff options
+
+| Option | Use when |
+|--------|----------|
+| Ignore whitespace | Indentation differs but content is the same |
+| Ignore case | \`SELECT\` vs \`select\` should match |
+| Side by side | Scanning two versions in parallel |
+| Unified | Pasting a patch into chat or a ticket |
+
+## Text compare vs diffchecker.com
+
+Generic diff sites work for plain text. VyomaStack adds **SQL and JSON formatting** in the same workspace as your other dev tools — one tab for format, compare, and explain.
+
+## Tips
+
+- For large files, compare sections incrementally
+- Redact secrets before pasting production configs anywhere
+- Pair with [Hash Generator](/tools/hash-generator) to fingerprint files before and after deploy
+
+## Try it free
+
+Compare two texts instantly — no account, no upload.`,
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
