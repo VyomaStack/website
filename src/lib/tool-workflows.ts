@@ -86,6 +86,18 @@ const WORKFLOW_OVERRIDES: Record<string, WorkflowStep[]> = {
     { title: "Compare", description: "Line-by-line diff with added and removed highlights" },
     { title: "Export", description: "Copy unified diff or review side-by-side" },
   ],
+  "yaml-formatter": [
+    { title: "Input", description: "Paste Kubernetes, Docker, or CI YAML configs" },
+    { title: "Format", description: "Beautify, validate, or minify with consistent indent" },
+    { title: "Convert", description: "Transform YAML to JSON for APIs and debugging" },
+    { title: "Export", description: "Copy or download formatted YAML" },
+  ],
+  "timestamp-converter": [
+    { title: "Input", description: "Paste Unix timestamp or pick a date/time" },
+    { title: "Convert", description: "Auto-detect seconds vs milliseconds" },
+    { title: "Output", description: "Local time, UTC, ISO 8601, and relative time" },
+    { title: "Export", description: "Copy results for logs, JWT debugging, or tickets" },
+  ],
 };
 
 export function getToolWorkflow(slug: string): {

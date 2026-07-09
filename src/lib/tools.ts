@@ -615,6 +615,90 @@ export const tools: Tool[] = [
     ],
   },
   {
+    slug: "yaml-formatter",
+    name: "YAML Formatter",
+    category: "Developer",
+    h1: "Free YAML Formatter & Validator Online",
+    seoTitle: "YAML Formatter & Validator — Online Free | VyomaStack",
+    seoDescription:
+      "Free online YAML formatter and validator. Beautify Kubernetes, Docker Compose, and CI configs. Convert YAML to JSON. Runs in your browser — private and instant.",
+    description:
+      "Format, validate, minify, and convert YAML to JSON. Built for Kubernetes manifests, Docker Compose, and GitHub Actions — all in your browser.",
+    keywords: [
+      "yaml formatter",
+      "yaml validator",
+      "yaml beautifier",
+      "format yaml online",
+      "kubernetes yaml formatter",
+      "yaml to json",
+    ],
+    relatedTools: ["json-formatter", "text-compare", "cron-generator"],
+    faqs: [
+      {
+        question: "What is a YAML formatter?",
+        answer:
+          "A YAML formatter restructures YAML with consistent indentation and spacing, making Kubernetes manifests, Docker Compose files, and CI configs easier to read and review.",
+      },
+      {
+        question: "Can I convert YAML to JSON?",
+        answer:
+          "Yes. Click To JSON to convert your YAML document into formatted JSON — useful for APIs and debugging.",
+      },
+      {
+        question: "Does this validate Kubernetes YAML?",
+        answer:
+          "It validates YAML syntax (structure and indentation). For K8s-specific schema rules, apply manifests with kubectl --dry-run=client after formatting.",
+      },
+      {
+        question: "Is my YAML sent to a server?",
+        answer:
+          "No. All formatting and validation runs entirely in your browser.",
+      },
+    ],
+  },
+  {
+    slug: "timestamp-converter",
+    name: "Timestamp Converter",
+    category: "Developer",
+    h1: "Free Unix Timestamp Converter Online",
+    seoTitle: "Unix Timestamp Converter — Epoch to Date | VyomaStack",
+    seoDescription:
+      "Free Unix timestamp converter. Convert epoch seconds or milliseconds to human-readable dates and back. UTC, local time, and ISO 8601. Runs in your browser.",
+    description:
+      "Convert Unix epoch timestamps to dates and back. Auto-detects seconds vs milliseconds. Shows local time, UTC, ISO 8601, and relative time.",
+    keywords: [
+      "unix timestamp converter",
+      "epoch converter",
+      "timestamp to date",
+      "unix time converter",
+      "milliseconds to date",
+      "epoch timestamp",
+    ],
+    relatedTools: ["cron-generator", "jwt-decoder", "uuid-generator"],
+    faqs: [
+      {
+        question: "What is a Unix timestamp?",
+        answer:
+          "A Unix timestamp is the number of seconds (or milliseconds) since January 1, 1970 UTC (the Unix epoch). Logs, APIs, and databases often use this format.",
+      },
+      {
+        question: "Seconds or milliseconds?",
+        answer:
+          "This tool auto-detects: 10-digit values are treated as seconds, 13-digit as milliseconds. You can also choose the output unit manually.",
+      },
+      {
+        question: "What time zones are shown?",
+        answer:
+          "Local time uses your browser timezone. UTC and ISO 8601 are always included for server-side debugging.",
+      },
+      {
+        question: "Is this tool free?",
+        answer:
+          "Yes. Completely free, runs in your browser, no signup required.",
+      },
+    ],
+  },
+  {
     slug: "log-analyzer",
     name: "AI Log Analyzer",
     category: "AI",

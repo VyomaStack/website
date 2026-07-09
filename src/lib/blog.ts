@@ -1001,6 +1001,112 @@ Generic diff sites work for plain text. VyomaStack adds **SQL and JSON formattin
 
 Compare two texts instantly — no account, no upload.`,
   },
+  {
+    slug: "yaml-formatter-online-guide",
+    title: "YAML Formatter Online — Kubernetes & Docker Guide",
+    description:
+      "Format and validate YAML for Kubernetes, Docker Compose, and GitHub Actions. Convert YAML to JSON free in your browser.",
+    publishedAt: "2026-07-09",
+    readTime: "4 min",
+    toolHref: "/tools/yaml-formatter",
+    toolLabel: "Format YAML Now",
+    keywords: ["yaml formatter", "yaml validator", "kubernetes yaml", "yaml to json"],
+    content: `YAML powers Kubernetes manifests, Docker Compose, GitHub Actions, Ansible, and CI pipelines. One indentation error can break a deploy — a formatter catches issues before \`kubectl apply\`.
+
+## When you need a YAML formatter
+
+- Clean up **Kubernetes Deployment** manifests before PR review
+- Validate **docker-compose.yml** syntax locally
+- Compare **ConfigMap** changes with [Text Compare](/tools/text-compare)
+- Convert YAML to **JSON** for API debugging
+
+## Format YAML in your browser
+
+The [VyomaStack YAML Formatter](/tools/yaml-formatter) runs **100% locally**:
+
+1. Paste your YAML into the input panel
+2. Click **Format** to beautify with 2- or 4-space indent
+3. Click **Validate** to catch syntax errors
+4. Click **To JSON** to convert for APIs or logs
+
+## Kubernetes YAML tips
+
+- Use **2-space indent** (K8s convention)
+- Redact secrets before pasting into any online tool
+- After formatting, run \`kubectl apply --dry-run=client -f file.yaml\`
+- Pair with [Cron Generator](/tools/cron-generator) for scheduled jobs
+
+## YAML vs JSON for configs
+
+| YAML | JSON |
+|------|------|
+| Human-readable | Machine-first |
+| K8s, Docker, CI | APIs, logs |
+| Indentation-sensitive | Brace-based |
+
+## Related tools
+
+- [JSON Formatter](/tools/json-formatter) — format JSON output from YAML conversion
+- [Text Compare](/tools/text-compare) — diff two config versions
+
+## Try it free
+
+Format Kubernetes and Docker YAML instantly — no signup.`,
+  },
+  {
+    slug: "unix-timestamp-converter-guide",
+    title: "Unix Timestamp Converter — Epoch to Date Online",
+    description:
+      "Convert Unix epoch timestamps to human-readable dates and back. Seconds, milliseconds, UTC, and ISO 8601 — free browser tool.",
+    publishedAt: "2026-07-09",
+    readTime: "4 min",
+    toolHref: "/tools/timestamp-converter",
+    toolLabel: "Convert Timestamp",
+    keywords: ["unix timestamp", "epoch converter", "timestamp to date", "unix time"],
+    content: `Logs, APIs, and databases love Unix timestamps — opaque integers like \`1717200000\`. When debugging, you need human-readable dates fast.
+
+## What is a Unix timestamp?
+
+Seconds (or milliseconds) since **January 1, 1970 UTC**. Common in:
+
+- **JWT** \`exp\` and \`iat\` claims (decode with [JWT Decoder](/tools/jwt-decoder))
+- **API responses** and webhook payloads
+- **Log lines** from Java, Node, and Python
+- **Cron debugging** alongside [Cron Generator](/tools/cron-generator)
+
+## Convert timestamps in your browser
+
+The [VyomaStack Timestamp Converter](/tools/timestamp-converter):
+
+1. Paste a timestamp → get **local**, **UTC**, and **ISO 8601** dates
+2. Pick a date → get **Unix seconds or milliseconds**
+3. Click **Now** for the current epoch time
+4. Auto-detects **10-digit (seconds)** vs **13-digit (milliseconds)**
+
+## Seconds vs milliseconds
+
+| Digits | Unit | Example |
+|--------|------|---------|
+| 10 | Seconds | \`1717200000\` |
+| 13 | Milliseconds | \`1717200000000\` |
+
+Mixing them up is a common bug — this tool detects automatically.
+
+## Debugging tips
+
+- Compare JWT \`exp\` with **Now** to see if a token expired
+- Use **ISO 8601** when filing tickets or writing runbooks
+- For log correlation, convert to UTC to match server logs
+
+## Related tools
+
+- [JWT Decoder](/tools/jwt-decoder) — inspect \`exp\` and \`iat\` claims
+- [Log Analyzer](/tools/log-analyzer) — parse error logs with timestamps
+
+## Try it free
+
+Convert epoch timestamps instantly — browser-local, no login.`,
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {

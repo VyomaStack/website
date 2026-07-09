@@ -64,7 +64,7 @@ export default function OpenGraphImage() {
             color: "#cbd5e1",
           }}
         >
-          <span>15 Free Tools</span>
+          <span>17 Free Tools</span>
           <span>·</span>
           <span>SQL & Spark AI</span>
           <span>·</span>

@@ -84,7 +84,7 @@ export function HomeSearchBar() {
         onKeyDown={(e) => {
           if (e.key === "Enter" && query.trim()) scrollToTools();
         }}
-        placeholder="Search the workspace — SQL, Spark, JSON, Regex..."
+        placeholder="Search — SQL, YAML, JWT, Spark, Timestamp..."
         className="h-11 pl-10"
         aria-label="Search tools"
       />

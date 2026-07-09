@@ -13,12 +13,16 @@ import { TextCompareTool } from "@/components/tools/text-compare-tool";
 import { SparkErrorExplainerTool } from "@/components/tools/spark-error-explainer-tool";
 import { SparkMemoryCalculatorTool } from "@/components/tools/spark-memory-calculator-tool";
 import { SqlFormatterTool } from "@/components/tools/sql-formatter-tool";
+import { TimestampConverterTool } from "@/components/tools/timestamp-converter-tool";
 import { UrlEncoderTool } from "@/components/tools/url-encoder-tool";
 import { UuidGeneratorTool } from "@/components/tools/uuid-generator-tool";
+import { YamlFormatterTool } from "@/components/tools/yaml-formatter-tool";
 
 export const LIVE_TOOL_SLUGS = [
   "sql-formatter",
   "json-formatter",
+  "yaml-formatter",
+  "timestamp-converter",
   "jwt-decoder",
   "uuid-generator",
   "base64-encoder",
@@ -39,6 +43,8 @@ export type LiveToolSlug = (typeof LIVE_TOOL_SLUGS)[number];
 export const TOOL_COMPONENTS: Record<LiveToolSlug, ComponentType> = {
   "sql-formatter": SqlFormatterTool,
   "json-formatter": JsonFormatterTool,
+  "yaml-formatter": YamlFormatterTool,
+  "timestamp-converter": TimestampConverterTool,
   "jwt-decoder": JwtDecoderTool,
   "uuid-generator": UuidGeneratorTool,
   "base64-encoder": Base64EncoderTool,

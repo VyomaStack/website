@@ -6,6 +6,7 @@ import {
   HomeSearchProvider,
   HomeToolGrid,
 } from "@/components/home/home-tool-search";
+import { FeaturedTools } from "@/components/marketing/featured-tools";
 import {
   HeroProductPreview,
   ProductShowcase,
@@ -99,6 +100,8 @@ export default function Home() {
       </section>
 
       <TrustStats />
+
+      <FeaturedTools />
 
       <div id="showcase">
         <ProductShowcase />
