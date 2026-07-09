@@ -80,6 +80,14 @@ export function SiteFooter() {
                 Blog
               </Link>
             </li>
+            <li>
+              <Link
+                href="/extension"
+                className="transition-colors hover:text-primary"
+              >
+                Chrome Extension
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

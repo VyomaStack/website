@@ -1,0 +1,19 @@
+{
+  "name": "vyomastack-extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/generate-icons.mjs && vite build",
+    "dev": "vite build --watch"
+  },
+  "dependencies": {
+    "sql-formatter": "^15.8.2"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "sharp": "^0.33.5",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

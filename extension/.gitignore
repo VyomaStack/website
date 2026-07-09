@@ -1,0 +1,6 @@
+# VyomaStack Extension
+
+Build artifacts and dependencies for this folder are not committed.
+Run `npm install && npm run build` locally, then load `dist/` in Chrome.
+
+See [README.md](./README.md) for install steps.
