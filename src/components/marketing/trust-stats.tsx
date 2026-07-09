@@ -1,8 +1,8 @@
-import { Lock, LogIn, Sparkles, Zap } from "lucide-react";
+import { Lock, LogIn, Sparkles, Wrench } from "lucide-react";
 
 import { TRUST_STATS } from "@/lib/site-stats";
 
-const ICONS = [Zap, Sparkles, Lock, LogIn] as const;
+const ICONS = [Wrench, Sparkles, Lock, LogIn] as const;
 
 export function TrustStats() {
   return (
@@ -12,7 +12,7 @@ export function TrustStats() {
     >
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-8 sm:grid-cols-4">
         {TRUST_STATS.map((stat, i) => {
-          const Icon = ICONS[i] ?? Zap;
+          const Icon = ICONS[i] ?? Wrench;
           return (
             <div key={stat.label} className="text-center">
               <Icon className="mx-auto mb-2 size-5 text-primary" aria-hidden />

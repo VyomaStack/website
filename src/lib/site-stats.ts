@@ -3,9 +3,9 @@
  * Update `queriesProcessed` when you have real analytics (GA, Vercel, etc.).
  */
 export const TRUST_STATS = [
-  { value: "100,000+", label: "Queries Processed" },
-  { value: "15+", label: "Live Tools" },
-  { value: "100%", label: "Browser Secure" },
+  { value: "15", label: "Live Tools" },
+  { value: "6", label: "AI Workflows" },
+  { value: "100%", label: "Browser Local" },
   { value: "Free", label: "No Login Required" },
 ] as const;
 

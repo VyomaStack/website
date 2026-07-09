@@ -75,7 +75,7 @@ export function HomeSearchBar() {
   }, []);
 
   return (
-    <div className="relative mt-2 w-full max-w-xl">
+    <div className="w-full max-w-xl">
       <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="search"

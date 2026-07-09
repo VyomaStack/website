@@ -64,11 +64,11 @@ export default function OpenGraphImage() {
             color: "#cbd5e1",
           }}
         >
-          <span>AI SQL Assistant</span>
+          <span>15 Free Tools</span>
           <span>·</span>
-          <span>Spark Calculator</span>
+          <span>SQL & Spark AI</span>
           <span>·</span>
-          <span>JSON Studio</span>
+          <span>Browser Local</span>
         </div>
       </div>
     ),
