@@ -1,13 +1,14 @@
 # VyomaStack Chrome Extension
 
-Format SQL, JSON, and decode JWT from any webpage — locally in the extension popup.
+Format SQL, JSON, and decode JWT locally. Analyze SQL and logs with VyomaStack AI from any page.
 
-## Features (v0.1)
+## Features (v0.2)
 
 - **Popup tools:** SQL format/minify, JSON format/minify, JWT decode
-- **Context menu:** Select text → right-click → VyomaStack → Format SQL / JSON / Decode JWT
-- **100% local** for format/decode (no data sent to servers)
-- **Open full tool** link to [vyomastack.com](https://www.vyomastack.com)
+- **AI Analyze tab:** Paste SQL, logs, or text → auto-detect → call VyomaStack API
+- **Context menu:** Select text → right-click → VyomaStack → Format / Decode / **Analyze with VyomaStack**
+- **Local format/decode** — no data sent for SQL/JSON/JWT transforms
+- **AI analyze** — selected text sent to `vyomastack.com/api/ai/analyze-selection` (same AI + instant fallbacks as the website)
 
 ## Build
 
@@ -26,6 +27,7 @@ Output is in `extension/dist/`.
 3. Enable **Developer mode**
 4. Click **Load unpacked**
 5. Select the `extension/dist` folder
+6. After updates, click **Reload** on the extension card
 
 ## Pin the extension
 
@@ -33,8 +35,9 @@ Click the puzzle icon in Chrome toolbar → pin **VyomaStack**.
 
 ## Usage
 
-1. Click the extension icon → paste SQL/JSON/JWT → Format
+1. Click the extension icon → choose a tab → paste text → Format / Analyze
 2. Or select text on any page → right-click → **VyomaStack** → choose action
+3. **Analyze** auto-detects SQL vs log/error vs generic text
 
 ## Chrome Web Store (later)
 
@@ -45,6 +48,6 @@ Click the puzzle icon in Chrome toolbar → pin **VyomaStack**.
 ## Roadmap
 
 - [ ] Prefill vyomastack.com tools from extension
-- [ ] AI explain via website (Pro)
 - [ ] YAML format in popup
+- [ ] Side panel for longer AI results
 - [ ] Firefox port (MV3)

@@ -14,7 +14,7 @@ import { SITE_URL } from "@/lib/tools";
 export const metadata: Metadata = {
   title: "Chrome Extension — Dev Tools in Your Browser",
   description:
-    "Install the VyomaStack Chrome extension. Format SQL, JSON, and decode JWT from any page with right-click or the toolbar popup.",
+    "Install the VyomaStack Chrome extension. Format SQL, JSON, decode JWT locally, and analyze SQL or logs with AI from any page.",
   alternates: { canonical: `${SITE_URL}/extension` },
 };
 
@@ -46,7 +46,7 @@ export default function ExtensionPage() {
             VyomaStack Chrome Extension
           </h1>
           <p className="mt-1 text-muted-foreground">
-            SQL, JSON, and JWT tools on any webpage — local and private.
+            SQL, JSON, JWT locally. Analyze SQL and logs with AI — from any page.
           </p>
         </div>
       </div>
@@ -55,7 +55,7 @@ export default function ExtensionPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Puzzle className="size-5 text-primary" />
-            v0.1 — Developer install
+            v0.2 — Developer install
           </CardTitle>
           <CardDescription>
             Chrome Web Store listing coming soon. For now, install unpacked from
@@ -90,9 +90,8 @@ export default function ExtensionPage() {
       </div>
 
       <p className="mt-8 text-sm text-muted-foreground">
-        Popup actions run locally in your browser. Links to vyomastack.com open
-        the full workspace with AI tools (SQL explain, log analyzer, Spark, and
-        more).
+        Format and decode run locally in your browser. Analyze sends selected
+        text to vyomastack.com (same AI + instant fallbacks as the website).
       </p>
     </div>
   );

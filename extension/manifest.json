@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "VyomaStack — Dev Tools",
-  "version": "0.1.0",
-  "description": "Format SQL, JSON, and decode JWT instantly from any page. Opens the full VyomaStack AI workspace.",
+  "version": "0.2.0",
+  "description": "Format SQL, JSON, decode JWT locally. Analyze SQL and logs with VyomaStack AI from any page.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

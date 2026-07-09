@@ -151,6 +151,18 @@ body {
   color: var(--danger);
 }
 
+.meta {
+  margin: 0;
+  font-size: 11px;
+  color: var(--success);
+  font-weight: 600;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
 .footer {
   display: flex;
   justify-content: space-between;

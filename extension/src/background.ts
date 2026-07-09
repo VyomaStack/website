@@ -3,21 +3,30 @@ import { formatSql, minifySql } from "./lib/sql";
 
 const SITE = "https://www.vyomastack.com";
 
-type Tool = "sql" | "json" | "jwt";
+type Tool = "sql" | "json" | "jwt" | "analyze";
 
-type PendingPayload = {
-  tool: Tool;
+type TransformPayload = {
+  kind: "transform";
+  tool: Exclude<Tool, "analyze">;
   input: string;
   action: "format" | "minify" | "decode";
 };
 
-const TOOL_PATHS: Record<Tool, string> = {
+type AnalyzePayload = {
+  kind: "analyze";
+  input: string;
+  autoRun: boolean;
+};
+
+type PendingPayload = TransformPayload | AnalyzePayload;
+
+const TOOL_PATHS: Record<Exclude<Tool, "analyze">, string> = {
   sql: "/tools/sql-formatter",
   json: "/tools/json-formatter",
   jwt: "/tools/jwt-decoder",
 };
 
-function runTransform(payload: PendingPayload): string {
+function runTransform(payload: TransformPayload): string {
   const { tool, input, action } = payload;
   if (tool === "sql") {
     return action === "minify" ? minifySql(input) : formatSql(input);
@@ -53,6 +62,12 @@ chrome.runtime.onInstalled.addListener(() => {
       title: "Decode JWT",
       contexts: ["selection"],
     });
+    chrome.contextMenus.create({
+      id: "vyoma-analyze",
+      parentId: "vyoma-parent",
+      title: "Analyze with VyomaStack",
+      contexts: ["selection"],
+    });
   });
 });
 
@@ -60,14 +75,25 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   const selection = info.selectionText?.trim();
   if (!selection) return;
 
-  let payload: PendingPayload | null = null;
+  if (info.menuItemId === "vyoma-analyze") {
+    const payload: AnalyzePayload = {
+      kind: "analyze",
+      input: selection,
+      autoRun: true,
+    };
+    await chrome.storage.session.set({ pending: payload });
+    await chrome.action.openPopup();
+    return;
+  }
+
+  let payload: TransformPayload | null = null;
 
   if (info.menuItemId === "vyoma-sql") {
-    payload = { tool: "sql", input: selection, action: "format" };
+    payload = { kind: "transform", tool: "sql", input: selection, action: "format" };
   } else if (info.menuItemId === "vyoma-json") {
-    payload = { tool: "json", input: selection, action: "format" };
+    payload = { kind: "transform", tool: "json", input: selection, action: "format" };
   } else if (info.menuItemId === "vyoma-jwt") {
-    payload = { tool: "jwt", input: selection, action: "decode" };
+    payload = { kind: "transform", tool: "jwt", input: selection, action: "decode" };
   }
 
   if (!payload) return;
@@ -88,4 +114,4 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 });
 
 export { SITE, TOOL_PATHS, runTransform };
-export type { PendingPayload, Tool };
+export type { AnalyzePayload, PendingPayload, Tool, TransformPayload };
