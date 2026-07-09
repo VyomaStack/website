@@ -1,6 +1,7 @@
 import { explainGenericLogOffline } from "@/lib/ai/fallbacks/generic-log";
 import { explainJavaSpringOffline } from "@/lib/ai/fallbacks/java-spring";
 import { explainSparkErrorOffline } from "@/lib/ai/fallbacks/spark";
+import { isLogLikeText, SPARK_HINT } from "@/lib/ai/log-patterns";
 
 export type LogType = "auto" | "spark" | "java-spring" | "generic";
 
@@ -11,7 +12,12 @@ export function detectLogType(log: string): Exclude<LogType, "auto"> {
     lower.includes("org.apache.spark") ||
     lower.includes("sparkoutofmemory") ||
     lower.includes("shuffle") && lower.includes("spark") ||
-    lower.includes("executor lost") && lower.includes("stage")
+    lower.includes("executor lost") && lower.includes("stage") ||
+    (SPARK_HINT.test(log) &&
+      (lower.includes("failed") ||
+        lower.includes("abort") ||
+        lower.includes("killed") ||
+        lower.includes("memory")))
   ) {
     return "spark";
   }

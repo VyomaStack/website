@@ -11,6 +11,7 @@ import {
   HeroProductPreview,
   ProductShowcase,
 } from "@/components/marketing/product-screenshots";
+import { SmartPastePlayground } from "@/components/marketing/smart-paste-playground";
 import { TrustStats } from "@/components/marketing/trust-stats";
 import { Button } from "@/components/ui/button";
 import {
@@ -77,9 +78,9 @@ export default function Home() {
                     <ArrowRight className="size-4" />
                   </Button>
                 </Link>
-                <Link href="#showcase">
+                <Link href="#try-it">
                   <Button variant="outline" size="lg">
-                    See it in action
+                    Paste anything
                   </Button>
                 </Link>
               </div>
@@ -98,6 +99,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <SmartPastePlayground />
 
       <TrustStats />
 

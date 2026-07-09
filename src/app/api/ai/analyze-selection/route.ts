@@ -12,7 +12,8 @@ import {
   LOG_TYPE_LABELS,
   resolveLogType,
 } from "@/lib/ai/log-analyzer";
-import { explainGenericLogOffline } from "@/lib/ai/fallbacks/generic-log";
+import { explainGenericTextOffline } from "@/lib/ai/fallbacks/generic-log";
+import { isLogLikeText } from "@/lib/ai/log-patterns";
 
 const LOG_SYSTEM_PROMPTS = {
   spark: `You are an Apache Spark expert. Analyze error logs for data engineers.
@@ -79,7 +80,7 @@ ${trimmed}
       });
     }
 
-    if (kind === "log") {
+    if (kind === "log" || isLogLikeText(trimmed)) {
       const resolvedType = resolveLogType("auto", trimmed);
       const label = LOG_TYPE_LABELS[resolvedType];
 
@@ -100,7 +101,7 @@ ${trimmed}
       return NextResponse.json({
         explanation,
         source,
-        kind,
+        kind: "log" satisfies SelectionKind,
         label,
         resolvedType,
       });
@@ -115,7 +116,7 @@ ${trimmed}
     const { text: explanation, source } = await generateWithFallback(
       GENERIC_SYSTEM_PROMPT,
       userPrompt,
-      () => explainGenericLogOffline(trimmed)
+      () => explainGenericTextOffline(trimmed)
     );
 
     return NextResponse.json({
