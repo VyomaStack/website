@@ -16,18 +16,18 @@ export default function Home() {
   return (
     <HomeSearchProvider>
       <div className="border-b border-border bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
-        <div className="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <div className="mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-xl">
+              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
                 Pick a tool. Get the job done.
               </h1>
-              <p className="mt-2 text-base text-muted-foreground sm:text-lg">
-                Text compare, SQL, JWT, Spark logs, JSON — click any card below
-                and go straight inside. No signup.
+              <p className="mt-1 text-sm text-muted-foreground">
+                Click any tool below — Text Compare, SQL, JWT, Spark, and more.
+                No signup.
               </p>
             </div>
-            <div className="flex w-full flex-col gap-2 lg:max-w-md">
+            <div className="flex w-full flex-col gap-1.5 lg:max-w-md">
               <HomeSearchBar />
               <Link
                 href="#try-it"
@@ -41,7 +41,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8">
         <HomeToolDirectory tools={tools} liveSlugs={liveSlugs} />
       </div>
 

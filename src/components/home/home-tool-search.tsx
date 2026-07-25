@@ -174,36 +174,35 @@ function ToolTile({
     <Link
       href={`/tools/${tool.slug}`}
       className={cn(
-        "group flex h-full flex-col rounded-xl border border-border bg-card p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md",
-        featured && "border-primary/25 bg-primary/[0.03] sm:p-5"
+        "group flex items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:border-primary/40 hover:bg-muted/40",
+        featured && "border-primary/20 bg-primary/[0.03]"
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        <span
-          className={cn(
-            "inline-flex size-10 items-center justify-center rounded-lg",
-            featured ? "bg-primary/15 text-primary" : "bg-muted text-foreground"
-          )}
-        >
-          <Icon className="size-5" />
-        </span>
-        {isAi && (
-          <span className="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
-            <Sparkles className="size-2.5" />
-            AI
-          </span>
+      <span
+        className={cn(
+          "inline-flex size-8 shrink-0 items-center justify-center rounded-md",
+          featured ? "bg-primary/15 text-primary" : "bg-muted text-foreground"
         )}
-      </div>
-      <h3 className="mt-3 text-base font-semibold tracking-tight group-hover:text-primary">
-        {tool.name}
-      </h3>
-      <p className="mt-1 flex-1 text-sm leading-snug text-muted-foreground">
-        {action}
-      </p>
-      <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary opacity-80 group-hover:opacity-100">
-        Open tool
-        <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+      >
+        <Icon className="size-4" />
       </span>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-1.5">
+          <h3 className="truncate text-sm font-semibold tracking-tight group-hover:text-primary">
+            {tool.name}
+          </h3>
+          {isAi && (
+            <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
+              <Sparkles className="size-2.5" />
+              AI
+            </span>
+          )}
+        </div>
+        <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">
+          {action}
+        </p>
+      </div>
+      <ArrowRight className="mt-1 size-3.5 shrink-0 text-muted-foreground opacity-0 transition-all group-hover:translate-x-0.5 group-hover:text-primary group-hover:opacity-100" />
     </Link>
   );
 }
@@ -238,7 +237,7 @@ export function HomeToolDirectory({
   const isFiltering = query.trim().length > 0;
 
   return (
-    <section id="tools" className="scroll-mt-16 space-y-8">
+    <section id="tools" className="scroll-mt-16 space-y-5">
       {isFiltering && (
         <p className="text-sm text-muted-foreground">
           {liveTools.length === 0
@@ -249,17 +248,10 @@ export function HomeToolDirectory({
 
       {!isFiltering && featured.length > 0 && (
         <div>
-          <div className="mb-3 flex items-end justify-between gap-3">
-            <div>
-              <h2 className="text-lg font-semibold tracking-tight">
-                Start here
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                Most used — click and go straight into the tool
-              </p>
-            </div>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="mb-2 text-sm font-semibold tracking-tight">
+            Start here
+          </h2>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((tool) => (
               <ToolTile key={tool.slug} tool={tool} featured />
             ))}
@@ -269,16 +261,11 @@ export function HomeToolDirectory({
 
       <div>
         {!isFiltering && (
-          <div className="mb-3">
-            <h2 className="text-lg font-semibold tracking-tight">
-              All tools
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Every module in one place — open any in one click
-            </p>
-          </div>
+          <h2 className="mb-2 text-sm font-semibold tracking-tight">
+            More tools
+          </h2>
         )}
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {(isFiltering ? liveTools : rest).map((tool) => (
             <ToolTile key={tool.slug} tool={tool} />
           ))}
