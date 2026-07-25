@@ -8,18 +8,10 @@ import {
   Copy,
   Check,
   Database,
-  GitCompare,
   Trash2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   computeLineDiff,
   getDiffStats,
@@ -42,12 +34,8 @@ LIMIT 100;`;
 type ViewMode = "split" | "unified";
 
 function rowClass(type: DiffRow["type"]): string {
-  if (type === "removed") {
-    return "bg-destructive/10";
-  }
-  if (type === "added") {
-    return "bg-success/10";
-  }
+  if (type === "removed") return "bg-destructive/10";
+  if (type === "added") return "bg-success/10";
   return "";
 }
 
@@ -66,33 +54,33 @@ function formatSql(text: string): string {
 
 function DiffTable({ rows }: { rows: DiffRow[] }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-input">
-      <table className="w-full min-w-[640px] border-collapse font-mono text-xs">
+    <div className="overflow-x-auto rounded-xl border border-border">
+      <table className="w-full min-w-[720px] border-collapse font-mono text-xs sm:text-sm">
         <thead>
-          <tr className="border-b border-input bg-muted/50 text-left text-muted-foreground">
-            <th className="w-10 px-2 py-2">#</th>
-            <th className="min-w-[45%] px-2 py-2">Original</th>
-            <th className="w-10 px-2 py-2">#</th>
-            <th className="min-w-[45%] px-2 py-2">Modified</th>
+          <tr className="border-b border-border bg-muted/50 text-left text-muted-foreground">
+            <th className="w-12 px-3 py-2">#</th>
+            <th className="min-w-[45%] px-3 py-2">Original</th>
+            <th className="w-12 px-3 py-2">#</th>
+            <th className="min-w-[45%] px-3 py-2">Modified</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row, i) => (
             <tr key={i} className={rowClass(row.type)}>
-              <td className="border-t border-input/50 px-2 py-1 text-muted-foreground align-top">
+              <td className="border-t border-border/50 px-3 py-1 text-muted-foreground align-top">
                 {row.left?.num ?? ""}
               </td>
-              <td className="border-t border-input/50 px-2 py-1 whitespace-pre-wrap break-all align-top text-foreground">
+              <td className="border-t border-border/50 px-3 py-1 whitespace-pre-wrap break-all align-top">
                 {row.type === "added" ? (
                   <span className="text-muted-foreground/40">—</span>
                 ) : (
                   row.left?.text
                 )}
               </td>
-              <td className="border-t border-input/50 px-2 py-1 text-muted-foreground align-top">
+              <td className="border-t border-border/50 px-3 py-1 text-muted-foreground align-top">
                 {row.right?.num ?? ""}
               </td>
-              <td className="border-t border-input/50 px-2 py-1 whitespace-pre-wrap break-all align-top text-foreground">
+              <td className="border-t border-border/50 px-3 py-1 whitespace-pre-wrap break-all align-top">
                 {row.type === "removed" ? (
                   <span className="text-muted-foreground/40">—</span>
                 ) : (
@@ -109,7 +97,7 @@ function DiffTable({ rows }: { rows: DiffRow[] }) {
 
 function UnifiedDiff({ rows }: { rows: DiffRow[] }) {
   return (
-    <pre className="overflow-x-auto rounded-lg border border-input bg-muted/30 p-4 font-mono text-xs leading-relaxed">
+    <pre className="overflow-x-auto rounded-xl border border-border bg-muted/30 p-4 font-mono text-xs leading-relaxed sm:text-sm">
       {rows.map((row, i) => {
         const prefix =
           row.type === "removed" ? "-" : row.type === "added" ? "+" : " ";
@@ -136,8 +124,8 @@ function UnifiedDiff({ rows }: { rows: DiffRow[] }) {
 }
 
 export function TextCompareTool() {
-  const [left, setLeft] = useState(SAMPLE_LEFT);
-  const [right, setRight] = useState(SAMPLE_RIGHT);
+  const [left, setLeft] = useState("");
+  const [right, setRight] = useState("");
   const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
   const [ignoreCase, setIgnoreCase] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("split");
@@ -166,11 +154,8 @@ export function TextCompareTool() {
       }
       try {
         const formatted = kind === "json" ? formatJson(text) : formatSql(text);
-        if (side === "left") {
-          setLeft(formatted);
-        } else {
-          setRight(formatted);
-        }
+        if (side === "left") setLeft(formatted);
+        else setRight(formatted);
         setError(null);
       } catch (e) {
         setError(
@@ -211,200 +196,193 @@ export function TextCompareTool() {
   const hasDiff = left.trim() || right.trim();
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Text Compare & Diff</CardTitle>
-          <CardDescription>
-            Compare two texts side by side. Format SQL or JSON before diffing.
-            Runs entirely in your browser.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <label className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={ignoreWhitespace}
-                onChange={(e) => setIgnoreWhitespace(e.target.checked)}
-                className="rounded border-input"
-              />
-              Ignore whitespace
-            </label>
-            <label className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={ignoreCase}
-                onChange={(e) => setIgnoreCase(e.target.checked)}
-                className="rounded border-input"
-              />
-              Ignore case
-            </label>
+    <div className="space-y-3">
+      {/* Compact toolbar */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <label className="flex items-center gap-2 text-sm text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={ignoreWhitespace}
+            onChange={(e) => setIgnoreWhitespace(e.target.checked)}
+            className="rounded border-input"
+          />
+          Ignore whitespace
+        </label>
+        <label className="flex items-center gap-2 text-sm text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={ignoreCase}
+            onChange={(e) => setIgnoreCase(e.target.checked)}
+            className="rounded border-input"
+          />
+          Ignore case
+        </label>
 
-            <div className="flex flex-wrap gap-2 sm:ml-auto">
+        <div className="flex flex-wrap gap-1.5 sm:ml-auto">
+          <Button
+            variant={viewMode === "split" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setViewMode("split")}
+          >
+            Side by side
+          </Button>
+          <Button
+            variant={viewMode === "unified" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setViewMode("unified")}
+          >
+            Unified
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleSwap}>
+            <ArrowDownUp className="size-3.5" />
+            Swap
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleLoadSample}>
+            Sample
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleCopyDiff}
+            disabled={!hasDiff}
+          >
+            {copied ? (
+              <Check className="size-3.5 text-success" />
+            ) : (
+              <Copy className="size-3.5" />
+            )}
+            {copied ? "Copied" : "Copy diff"}
+          </Button>
+          <Button variant="ghost" size="sm" onClick={handleClear}>
+            <Trash2 className="size-3.5" />
+            Clear
+          </Button>
+        </div>
+      </div>
+
+      {error && (
+        <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {error}
+        </div>
+      )}
+
+      {/* Big dual paste — the only thing that matters */}
+      <div className="grid gap-3 lg:grid-cols-2">
+        <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-background">
+          <div className="flex items-center justify-between gap-2 border-b border-border px-3 py-1.5">
+            <label
+              className="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+              htmlFor="compare-left"
+            >
+              Original
+            </label>
+            <div className="flex gap-0.5">
               <Button
-                variant={viewMode === "split" ? "default" : "outline"}
+                variant="ghost"
                 size="sm"
-                onClick={() => setViewMode("split")}
+                className="h-7 px-2 text-xs"
+                onClick={() => applyFormat("left", "sql")}
               >
-                Side by side
+                <Database className="size-3" />
+                SQL
               </Button>
               <Button
-                variant={viewMode === "unified" ? "default" : "outline"}
+                variant="ghost"
                 size="sm"
-                onClick={() => setViewMode("unified")}
+                className="h-7 px-2 text-xs"
+                onClick={() => applyFormat("left", "json")}
               >
-                Unified
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleSwap}>
-                <ArrowDownUp className="size-4" />
-                Swap
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleLoadSample}>
-                Sample
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleCopyDiff}>
-                {copied ? (
-                  <Check className="size-4 text-success" />
-                ) : (
-                  <Copy className="size-4" />
-                )}
-                {copied ? "Copied" : "Copy diff"}
-              </Button>
-              <Button variant="ghost" size="sm" onClick={handleClear}>
-                <Trash2 className="size-4" />
-                Clear
+                <Braces className="size-3" />
+                JSON
               </Button>
             </div>
           </div>
+          <textarea
+            id="compare-left"
+            value={left}
+            onChange={(e) => {
+              setLeft(e.target.value);
+              setError(null);
+            }}
+            placeholder="Paste original text…"
+            spellCheck={false}
+            className="min-h-[min(58vh,560px)] w-full flex-1 resize-y border-0 bg-transparent p-4 font-mono text-sm leading-relaxed outline-none"
+          />
+        </div>
 
-          {error && (
-            <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {error}
-            </div>
-          )}
-
-          <div className="grid gap-4 lg:grid-cols-2">
-            <div className="space-y-2">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <label className="text-sm font-medium" htmlFor="compare-left">
-                  Original (left)
-                </label>
-                <div className="flex gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => applyFormat("left", "sql")}
-                  >
-                    <Database className="size-3.5" />
-                    SQL
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => applyFormat("left", "json")}
-                  >
-                    <Braces className="size-3.5" />
-                    JSON
-                  </Button>
-                </div>
-              </div>
-              <textarea
-                id="compare-left"
-                value={left}
-                onChange={(e) => {
-                  setLeft(e.target.value);
-                  setError(null);
-                }}
-                placeholder="Paste original text..."
-                spellCheck={false}
-                className="min-h-[240px] w-full resize-y rounded-lg border border-input bg-transparent p-3 font-mono text-sm leading-relaxed outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <label className="text-sm font-medium" htmlFor="compare-right">
-                  Modified (right)
-                </label>
-                <div className="flex gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => applyFormat("right", "sql")}
-                  >
-                    <Database className="size-3.5" />
-                    SQL
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => applyFormat("right", "json")}
-                  >
-                    <Braces className="size-3.5" />
-                    JSON
-                  </Button>
-                </div>
-              </div>
-              <textarea
-                id="compare-right"
-                value={right}
-                onChange={(e) => {
-                  setRight(e.target.value);
-                  setError(null);
-                }}
-                placeholder="Paste modified text..."
-                spellCheck={false}
-                className="min-h-[240px] w-full resize-y rounded-lg border border-input bg-transparent p-3 font-mono text-sm leading-relaxed outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-              />
+        <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-background">
+          <div className="flex items-center justify-between gap-2 border-b border-border px-3 py-1.5">
+            <label
+              className="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+              htmlFor="compare-right"
+            >
+              Modified
+            </label>
+            <div className="flex gap-0.5">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => applyFormat("right", "sql")}
+              >
+                <Database className="size-3" />
+                SQL
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => applyFormat("right", "json")}
+              >
+                <Braces className="size-3" />
+                JSON
+              </Button>
             </div>
           </div>
+          <textarea
+            id="compare-right"
+            value={right}
+            onChange={(e) => {
+              setRight(e.target.value);
+              setError(null);
+            }}
+            placeholder="Paste modified text…"
+            spellCheck={false}
+            className="min-h-[min(58vh,560px)] w-full flex-1 resize-y border-0 bg-transparent p-4 font-mono text-sm leading-relaxed outline-none"
+          />
+        </div>
+      </div>
 
-          {hasDiff && (
-            <div className="space-y-3">
-              <div className="flex flex-wrap items-center gap-3 text-sm">
-                <span className="flex items-center gap-1.5 font-medium">
-                  <GitCompare className="size-4 text-primary" />
-                  Diff results
-                </span>
-                <span className="text-muted-foreground">
-                  <span className="text-success">{stats.added} added</span>
-                  {" · "}
-                  <span className="text-destructive">{stats.removed} removed</span>
-                  {" · "}
-                  {stats.unchanged} unchanged
-                </span>
-              </div>
-
-              {viewMode === "split" ? (
-                <DiffTable rows={rows} />
-              ) : (
-                <UnifiedDiff rows={rows} />
-              )}
-            </div>
+      {hasDiff ? (
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <span className="font-medium">Diff</span>
+            <span className="text-muted-foreground">
+              <span className="text-success">{stats.added} added</span>
+              {" · "}
+              <span className="text-destructive">{stats.removed} removed</span>
+              {" · "}
+              {stats.unchanged} unchanged
+            </span>
+          </div>
+          {viewMode === "split" ? (
+            <DiffTable rows={rows} />
+          ) : (
+            <UnifiedDiff rows={rows} />
           )}
-        </CardContent>
-      </Card>
-
-      <Card size="sm">
-        <CardHeader>
-          <CardTitle>How it works</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm text-muted-foreground">
-          <p>
-            <strong className="text-foreground">Compare</strong> — line-by-line
-            diff updates as you type. Green = added, red = removed.
-          </p>
-          <p>
-            <strong className="text-foreground">Format</strong> — beautify SQL or
-            JSON on either side before comparing config, queries, or API payloads.
-          </p>
-          <p>
-            <strong className="text-foreground">Private</strong> — all diffing runs
-            locally in your browser. Nothing is uploaded.
-          </p>
-        </CardContent>
-      </Card>
+        </div>
+      ) : (
+        <p className="text-center text-sm text-muted-foreground">
+          Paste on both sides — or{" "}
+          <button
+            type="button"
+            onClick={handleLoadSample}
+            className="font-medium text-primary underline-offset-2 hover:underline"
+          >
+            load sample
+          </button>
+        </p>
+      )}
     </div>
   );
 }
