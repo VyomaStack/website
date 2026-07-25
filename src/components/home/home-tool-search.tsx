@@ -11,12 +11,6 @@ import {
 import Link from "next/link";
 import { Search, Sparkles } from "lucide-react";
 
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import type { Tool } from "@/types/tool";
 
@@ -27,6 +21,8 @@ const AI_TOOL_SLUGS = new Set([
   "spark-error-explainer",
   "log-analyzer",
 ]);
+
+const CATEGORY_ORDER = ["SQL", "JSON", "Spark", "AI", "Security", "Developer"];
 
 type SearchContextValue = {
   query: string;
@@ -64,10 +60,10 @@ export function HomeSearchProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function HomeSearchBar() {
+export function HomeSearchBar({ className }: { className?: string }) {
   const { query, setQuery } = useToolSearch();
 
-  const scrollToTools = useCallback(() => {
+  const focusTools = useCallback(() => {
     document.getElementById("tools")?.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -75,16 +71,17 @@ export function HomeSearchBar() {
   }, []);
 
   return (
-    <div className="w-full max-w-xl">
-      <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+    <div className={`relative w-full ${className ?? ""}`}>
+      <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onFocus={focusTools}
         onKeyDown={(e) => {
-          if (e.key === "Enter" && query.trim()) scrollToTools();
+          if (e.key === "Enter") focusTools();
         }}
-        placeholder="Search — SQL, YAML, JWT, Spark, Timestamp..."
+        placeholder="Find a tool — SQL, Text Compare, JWT, Spark…"
         className="h-11 pl-10"
         aria-label="Search tools"
       />
@@ -92,7 +89,7 @@ export function HomeSearchBar() {
   );
 }
 
-export function HomeToolGrid({
+export function HomeToolDirectory({
   tools,
   liveSlugs,
 }: {
@@ -101,72 +98,83 @@ export function HomeToolGrid({
 }) {
   const { query } = useToolSearch();
 
-  const filtered = useMemo(
-    () => tools.filter((t) => matchesTool(t, query)),
-    [tools, query]
+  const liveTools = useMemo(
+    () => tools.filter((t) => liveSlugs.has(t.slug) && matchesTool(t, query)),
+    [tools, liveSlugs, query]
   );
+
+  const groups = useMemo(() => {
+    const map = new Map<string, Tool[]>();
+    for (const tool of liveTools) {
+      const list = map.get(tool.category) ?? [];
+      list.push(tool);
+      map.set(tool.category, list);
+    }
+    return [...map.entries()].sort(([a], [b]) => {
+      const ia = CATEGORY_ORDER.indexOf(a);
+      const ib = CATEGORY_ORDER.indexOf(b);
+      if (ia === -1 && ib === -1) return a.localeCompare(b);
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    });
+  }, [liveTools]);
 
   const isFiltering = query.trim().length > 0;
 
   return (
-    <section id="tools" className="mx-auto max-w-6xl px-6 py-12">
-      <h2 className="text-2xl font-semibold tracking-tight">
-        The workspace toolkit
-      </h2>
-      <p className="mt-1 text-muted-foreground">
-        Browser-secure utilities with AI where it matters. More launching every
-        week.
-      </p>
+    <section id="tools" className="scroll-mt-16">
       {isFiltering && (
-        <p className="mt-2 text-sm text-muted-foreground">
-          {filtered.length === 0
+        <p className="mb-3 text-sm text-muted-foreground">
+          {liveTools.length === 0
             ? `No tools match "${query.trim()}"`
-            : `Showing ${filtered.length} of ${tools.length} tools for "${query.trim()}"`}
+            : `${liveTools.length} tool${liveTools.length === 1 ? "" : "s"} match "${query.trim()}"`}
         </p>
       )}
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((tool) => {
-          const isLive = liveSlugs.has(tool.slug);
-          const isAi = AI_TOOL_SLUGS.has(tool.slug);
 
-          const content = (
-            <Card
-              className={
-                isLive ? "transition-all hover:ring-primary/40" : "opacity-70"
-              }
-            >
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium text-primary">
-                    {tool.category}
-                  </span>
-                  {isAi && isLive && (
-                    <span className="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
-                      <Sparkles className="size-2.5" />
-                      AI
-                    </span>
-                  )}
-                </div>
-                <CardTitle>{tool.name}</CardTitle>
-                <CardDescription>{tool.description}</CardDescription>
-                {!isLive && (
-                  <span className="text-xs text-muted-foreground">
-                    Coming soon
-                  </span>
-                )}
-              </CardHeader>
-            </Card>
-          );
-
-          return isLive ? (
-            <Link key={tool.slug} href={`/tools/${tool.slug}`}>
-              {content}
-            </Link>
-          ) : (
-            <div key={tool.slug}>{content}</div>
-          );
-        })}
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {groups.map(([category, items]) => (
+          <div key={category}>
+            <h2 className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {category}
+            </h2>
+            <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
+              {items.map((tool) => {
+                const isAi = AI_TOOL_SLUGS.has(tool.slug);
+                return (
+                  <li key={tool.slug}>
+                    <Link
+                      href={`/tools/${tool.slug}`}
+                      className="flex items-center justify-between gap-2 px-3 py-2.5 transition-colors hover:bg-muted/70"
+                    >
+                      <span className="truncate text-sm font-medium">
+                        {tool.name}
+                      </span>
+                      {isAi && (
+                        <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+                          <Sparkles className="size-2.5" />
+                          AI
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   );
+}
+
+/** @deprecated Prefer HomeToolDirectory — kept for compatibility */
+export function HomeToolGrid({
+  tools,
+  liveSlugs,
+}: {
+  tools: Tool[];
+  liveSlugs: Set<string>;
+}) {
+  return <HomeToolDirectory tools={tools} liveSlugs={liveSlugs} />;
 }
