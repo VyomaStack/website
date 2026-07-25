@@ -63,7 +63,6 @@ const TOOL_ICONS: Record<string, LucideIcon> = {
   "qr-code-generator": QrCode,
 };
 
-/** Short action line — what you do, not marketing */
 const TOOL_ACTIONS: Record<string, string> = {
   "sql-formatter": "Beautify SQL & get AI explain",
   "json-formatter": "Format JSON · make POJOs",
@@ -159,13 +158,7 @@ export function HomeSearchBar({ className }: { className?: string }) {
   );
 }
 
-function ToolTile({
-  tool,
-  featured = false,
-}: {
-  tool: Tool;
-  featured?: boolean;
-}) {
+function FeaturedTile({ tool }: { tool: Tool }) {
   const Icon = TOOL_ICONS[tool.slug] ?? Wand2;
   const isAi = AI_TOOL_SLUGS.has(tool.slug);
   const action = TOOL_ACTIONS[tool.slug] ?? tool.description;
@@ -173,17 +166,9 @@ function ToolTile({
   return (
     <Link
       href={`/tools/${tool.slug}`}
-      className={cn(
-        "group flex items-start gap-3 rounded-lg border border-border bg-card p-3 transition-colors hover:border-primary/40 hover:bg-muted/40",
-        featured && "border-primary/20 bg-primary/[0.03]"
-      )}
+      className="group flex items-start gap-3 rounded-lg border border-primary/20 bg-primary/[0.03] p-3 transition-colors hover:border-primary/50 hover:bg-primary/[0.06]"
     >
-      <span
-        className={cn(
-          "inline-flex size-8 shrink-0 items-center justify-center rounded-md",
-          featured ? "bg-primary/15 text-primary" : "bg-muted text-foreground"
-        )}
-      >
+      <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary">
         <Icon className="size-4" />
       </span>
       <div className="min-w-0 flex-1">
@@ -229,48 +214,72 @@ export function HomeToolDirectory({
   }, [liveTools, query]);
 
   const rest = useMemo(() => {
-    const featuredSet = new Set(FEATURED_SLUGS);
+    const featuredSet = new Set<string>(FEATURED_SLUGS);
     if (query.trim()) return liveTools;
-    return liveTools.filter((t) => !featuredSet.has(t.slug as (typeof FEATURED_SLUGS)[number]));
+    return liveTools.filter((t) => !featuredSet.has(t.slug));
   }, [liveTools, query]);
 
   const isFiltering = query.trim().length > 0;
 
   return (
-    <section id="tools" className="scroll-mt-16 space-y-5">
-      {isFiltering && (
-        <p className="text-sm text-muted-foreground">
-          {liveTools.length === 0
-            ? `No tools match "${query.trim()}"`
-            : `${liveTools.length} tool${liveTools.length === 1 ? "" : "s"} match "${query.trim()}"`}
-        </p>
-      )}
-
-      {!isFiltering && featured.length > 0 && (
+    <section id="tools" className="scroll-mt-16 space-y-6">
+      {isFiltering ? (
         <div>
-          <h2 className="mb-2 text-sm font-semibold tracking-tight">
-            Start here
-          </h2>
-          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((tool) => (
-              <ToolTile key={tool.slug} tool={tool} featured />
+          <p className="mb-2 text-sm text-muted-foreground">
+            {liveTools.length === 0
+              ? `No tools match "${query.trim()}"`
+              : `${liveTools.length} result${liveTools.length === 1 ? "" : "s"}`}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {liveTools.map((tool) => (
+              <Link
+                key={tool.slug}
+                href={`/tools/${tool.slug}`}
+                className="rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
+              >
+                {tool.name}
+              </Link>
             ))}
           </div>
         </div>
-      )}
+      ) : (
+        <>
+          {/* Focus: what users care about */}
+          <div>
+            <h2 className="mb-2 text-sm font-semibold tracking-tight">
+              Popular tools
+            </h2>
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((tool) => (
+                <FeaturedTile key={tool.slug} tool={tool} />
+              ))}
+            </div>
+          </div>
 
-      <div>
-        {!isFiltering && (
-          <h2 className="mb-2 text-sm font-semibold tracking-tight">
-            More tools
-          </h2>
-        )}
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {(isFiltering ? liveTools : rest).map((tool) => (
-            <ToolTile key={tool.slug} tool={tool} />
-          ))}
-        </div>
-      </div>
+          {/* Other tools: names only — no fluff */}
+          {rest.length > 0 && (
+            <div>
+              <h2 className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                More
+              </h2>
+              <div className="flex flex-wrap gap-1.5">
+                {rest.map((tool) => (
+                  <Link
+                    key={tool.slug}
+                    href={`/tools/${tool.slug}`}
+                    className={cn(
+                      "rounded-md border border-transparent bg-muted/50 px-2.5 py-1 text-sm text-muted-foreground transition-colors",
+                      "hover:border-border hover:bg-card hover:text-foreground"
+                    )}
+                  >
+                    {tool.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </section>
   );
 }
