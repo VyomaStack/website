@@ -1,53 +1,51 @@
 import Link from "next/link";
-import { Layers, Sparkles } from "lucide-react";
+import { Layers } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { ToolsCta, ToolsNav } from "@/components/layout/tools-nav";
+import { LIVE_TOOL_SLUGS } from "@/lib/live-tools";
+import { getTool } from "@/lib/tools";
+
+const AI_TOOL_SLUGS = new Set([
+  "sql-formatter",
+  "json-formatter",
+  "spark-memory-calculator",
+  "spark-error-explainer",
+  "log-analyzer",
+]);
 
 export function SiteHeader() {
+  const navTools = LIVE_TOOL_SLUGS.map((slug) => {
+    const tool = getTool(slug);
+    if (!tool) return null;
+    return {
+      slug: tool.slug,
+      name: tool.name,
+      category: tool.category,
+      isAi: AI_TOOL_SLUGS.has(tool.slug),
+    };
+  }).filter(Boolean) as {
+    slug: string;
+    name: string;
+    category: string;
+    isAi: boolean;
+  }[];
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-14 max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold tracking-tight"
+          className="flex shrink-0 items-center gap-2 font-semibold tracking-tight"
         >
           <Layers className="size-5 text-primary" />
-          <span className="hidden sm:inline">VyomaStack</span>
-          <span className="hidden text-xs font-normal text-muted-foreground md:inline">
-            AI Workspace
-          </span>
+          <span>VyomaStack</span>
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
-          <Link href="/#showcase" className="transition-colors hover:text-foreground">
-            Showcase
-          </Link>
-          <Link href="/blog" className="transition-colors hover:text-foreground">
-            Blog
-          </Link>
-          <Link href="/tools" className="transition-colors hover:text-foreground">
-            Workspace
-          </Link>
-          <Link
-            href="/tools/sql-formatter"
-            className="transition-colors hover:text-foreground"
-          >
-            SQL AI
-          </Link>
-          <Link
-            href="/tools/spark-error-explainer"
-            className="transition-colors hover:text-foreground"
-          >
-            Spark
-          </Link>
-        </nav>
+        <ToolsNav tools={navTools} />
 
-        <Link href="/tools/sql-formatter">
-          <Button size="sm">
-            <Sparkles className="size-3.5" />
-            AI Workspace
-          </Button>
-        </Link>
+        <div className="hidden lg:block">
+          <ToolsCta />
+        </div>
       </div>
     </header>
   );
